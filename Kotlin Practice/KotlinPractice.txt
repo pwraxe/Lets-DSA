@@ -601,6 +601,133 @@ fun getHexReminder(rem : Int) : String = when(rem) {
     }
 ------------------------------------------------------
 ------------------------------------------------------
+//Bin to Octal && Bin to Hex
+fun main() {
+
+    //Binary > Decimal > Octal
+    toOctal(toDecimal(10011010))
+
+    //Binary > Decimal > Hexadecimal
+    toHex(toDecimal(10011010))
+}
+
+private fun toDecimal (num: Int): Int {
+    var temp = num
+    var decimal = 0
+    var power = 0
+
+    while (temp > 0) {
+        val remainder = temp % 10
+        decimal = (decimal + remainder * Math.pow(2.0,power.toDouble()).toInt())
+        temp /= 10
+        power++
+    }
+    return decimal
+}
+
+private fun toOctal(num: Int) {
+
+    //We have decimal values now
+
+    var temp = num
+    var toOct = ""
+    while (temp > 0) {
+
+        val remainder = temp % 8
+        toOct  += "$remainder"
+        temp /= 8
+    }
+    println("$num --> ${toOct.reversed()}")
+}
+
+private fun toHex(num: Int) {
+    //We have decimal values here
+    var temp  = num
+    var toHex = ""
+
+    while (temp > 0) {
+        val remainder = temp % 16
+        toHex += getHexValues(remainder)
+        temp /= 16
+    }
+    println("$num --> ${toHex.reversed()}")
+}
+
+fun getHexValues(num: Int) = when (num) {
+    10 -> "A"
+    11 -> "B"
+    12 -> "C"
+    13 -> "D"
+    14 -> "E"
+    15 -> "F"
+    else -> "$num"
+}
+------------------------------------------------------
+
+//Octal To Decimal
+//Octal To Binary
+//Octal To Hex
+
+fun main() {
+    //Note : Each Digit for octal No. should be in range of 0..7
+    val num = 435
+    println("$num to Decimal : ${toDecimal(num)}")
+
+    toBinary(toDecimal(num))
+    toHex(toDecimal(num))
+}
+
+private fun toDecimal(num: Int) : Int {
+    var temp = num
+    var toDecimal = 0
+    var power = 0
+
+    while (temp > 0) {
+        val remainder = temp % 10
+        toDecimal += (remainder * Math.pow(8.0, power.toDouble()).toInt())
+        temp /= 10
+        power++
+    }
+    return toDecimal
+}
+
+private fun  toBinary(num: Int) {
+
+    //We  got decimal value here
+    var temp = num
+    var toBin = ""
+
+    while (temp > 0) {
+        val remainder = temp % 2
+        toBin += "$remainder"
+        temp /= 2
+    }
+    println("$num --> ${toBin.reversed()}")
+}
+
+private fun toHex(num: Int) {
+    var temp = num
+    var toHex = ""
+
+    while (temp > 0) {
+        val remainder = temp % 16
+        toHex += getHexValues(remainder)
+        temp /= 16
+    }
+    println("$num --> toHex --> ${toHex.reversed()}")
+}
+fun getHexValues(num: Int) = when (num) {
+    10 -> "A"
+    11 -> "B"
+    12 -> "C"
+    13 -> "D"
+    14 -> "E"
+    15 -> "F"
+    else -> "$num"
+}
+
+------------------------------------------------------
+------------------------------------------------------
 ------------------------------------------------------
 ------------------------------------------------------
 ------------------------------------------------------
