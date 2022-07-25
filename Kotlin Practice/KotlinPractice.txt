@@ -1,0 +1,671 @@
+------------------------------------------------------
+fun main() {
+
+    val a : Int
+    val b : Int
+
+    val scanner = Scanner(System.`in`)
+
+    println("Enter First No : ")
+    a = scanner.nextInt()
+
+    println("Enter Second No : ")
+    b = scanner.nextInt()
+
+    println("Enter Operation (+,-,*,/)")
+
+    val result = when(scanner.next()[0]) {
+        '+' -> a+b
+        '-' -> a-b
+        '*' -> a*b
+        '/' -> a/b
+        else -> -1
+    }
+    println("Your Result is : $result")
+}
+------------------------------------------------------
+
+fun main() {
+    val a = 1000
+    val b = 212
+    val c = 6500
+
+    val max = when {
+        a > b && a > c -> a
+        b > a && b > c -> b
+        c > a && c > b -> c
+        else -> {0}
+    }
+    println("Max between $a , $b, $c is : $max")
+}
+
+------------------------------------------------------
+
+fun main() {
+    var a = 15
+    var b = 20
+
+    println("Numbers Before Swap : $a , $b")
+
+    a = a - b   // 15 = 15 - 20 ==> a = -5
+    b = a + b   // 20 = -5 + 20 ==> 15
+    a = b - a   // -5 = 15 +5 = 20
+
+    println("Numbers After Swap : $a , $b")
+}
+------------------------------------------------------
+
+fun main() {
+    val km = 2
+    val miles = 2
+    println("$km Km To Miles : ${toMiles(km)}")
+    println("$miles Miles To Km : ${toKms(miles)}")
+}
+fun toMiles(km: Int) : Double = km.toDouble().div(1.609)
+fun toKms(miles: Int) : Double = miles.times(1.609)
+
+------------------------------------------------------
+
+fun main() {
+    val a = 46
+    val b = 41
+    println(if(a % 2 == 0) "$a is Even" else "$a is Odd")
+    println(if(b % 2 == 0) "$b is Even" else "$b is Odd")
+}
+
+------------------------------------------------------
+fun main() {
+
+    val num = 100
+
+    val result = when {
+        num > 0 -> "Positive"
+        num < 0 -> "Negative"
+        else -> "Zero"
+    }
+    println("Number $num is $result")
+}
+------------------------------------------------------
+fun main() {
+
+    val year = 2020
+
+    val isLeapYear = if(year%4 == 0) {
+        if(year % 100 == 0) {
+            year%400 == 0
+        } else true
+    } else false
+
+    println(if(isLeapYear) "$year is Leap Year" else "$year is Not a Lear Year")
+}
+------------------------------------------------------
+
+fun main() {
+    val num: Int
+
+    val scanner = Scanner(System.`in`)
+
+    println("Enter No To get Table : ")
+    num = scanner.nextInt()
+
+    for (index in 1..10){
+        println("$num * $index = ${num*index}")
+    }
+}
+
+------------------------------------------------------
+
+//Formula to calculate simple interest is: (Principal × RatePerAnnum × TimeInYear)/100
+//Simple Interest
+fun main() {
+
+    val principal = 5000
+    val rateOfInterest = 12
+    val timeInYear = 2
+    val simpleRateOfInterest = (principal.times(rateOfInterest).times(timeInYear).div(100))
+    println("Rate Of Interest : $simpleRateOfInterest")
+}
+
+------------------------------------------------------
+
+//Compound Interest : P * (Math.pow(( 1 + R/100), T)
+fun main() {
+
+    val principal = 5000
+    val rateOfInterest = 12
+    val timeInYear = 5
+
+    val compoundInterest = principal.toDouble() * Math.pow((1+rateOfInterest.div(100.0)),timeInYear.toDouble())
+    println("Rate Of Interest : $compoundInterest")
+}
+
+------------------------------------------------------
+//Find Grade
+fun main() {
+    val marks = 70
+
+    val grade = when {
+        marks >= 80 -> "A"
+        marks >= 60 -> "B"
+        marks >= 40 -> "C"
+        else -> "D"
+    }
+    println("Obtain \'$grade\' Grade for $marks Marks")
+}
+
+------------------------------------------------------
+
+fun main() {
+
+    val hindi = 67
+    val marathi = 98
+    val english = 34
+    val socialSci = 67
+    val math = 90
+
+    val marks = (((hindi+marathi+english+socialSci+math).toDouble()/500.0)*100).toDouble()
+
+    val grade = when {
+        marks >= 80 -> "A"
+        marks >= 60 -> "B"
+        marks >= 40 -> "C"
+        else -> "D"
+    }
+    println("Obtain \'$grade\' Grade for $marks Marks")
+}
+
+------------------------------------------------------
+//GCD
+fun main() {
+
+    val first = 11
+    val second = 77
+
+    var gcd = 1
+    var i = 1
+
+    while (i <= first && i <= second) {
+        if (first%i == 0 && second%i==0) { gcd = i }
+        i++
+    }
+    println("GCD of $first & $second is $gcd")
+}
+------------------------------------------------------
+fun main() {
+    val fahrenheit = 67
+    println("$fahrenheit to Celsius : ${toCelsius(fahrenheit.toDouble())}")
+}
+
+fun toCelsius(fahrenheit: Double) : Double{
+    return ( (fahrenheit - 32 ) *5 ) / 9
+}
+
+------------------------------------------------------
+
+//LCM
+fun main() {
+    val first = 45
+    val second = 30
+
+    var lcm = if(first > second) first else second
+
+    while (true) {
+        if(lcm%first == 0 && lcm%second == 0) {
+            break
+        }
+        lcm++
+    }
+    println("LCM is : $lcm")
+}
+------------------------------------------------------
+fun main() {
+
+    val factors = arrayListOf<Int>()
+
+    val num = 45 // == O/p -->  [1, 3, 5, 9, 15, 45]
+
+    for (index in 1..num) {
+        if(num%index == 0) {
+            factors.add(index)
+        }
+    }
+    println(factors)
+}
+------------------------------------------------------
+
+//Following is simply very worst case
+//find square root (∞  > num > 0)
+fun main() {
+
+    val num = 64
+    var squareRoot = 0
+    val factors = arrayListOf<Int>()
+
+    for (index in 1..num) {
+        if(num%index == 0) {
+            factors.add(index)
+        }
+    }
+    for (n in factors) {
+        if(n*n == num) {
+            squareRoot = n
+            break
+        }
+    }
+    println("Square Root of $num is $squareRoot")
+}
+------------------------------------------------------
+
+fun main() {
+    val num = 12
+    var factorials = 1
+    for (n in 1..num) { //O(n) > Worst case
+        factorials *= n
+    }
+    println("Factorials of $num is $factorials")
+}
+
+------------------------------------------------------
+
+//Fibonacci Series
+fun main() {
+
+    val numbers = 20
+    var first = 0
+    var second = 1
+    var third = -1
+
+    repeat(numbers) {
+        print("$first, ")
+        third = first + second
+        first = second
+        second = third
+    }
+}
+
+------------------------------------------------------
+
+//Count Digits
+fun main() {
+    val number = "123467899a1"
+    //Method - 1
+    println("${number.length}")
+
+    //Method - 2
+    var count = 0
+    var isCharacterContains = false
+    val toArray = number.toCharArray()
+    for (ch in toArray) {
+        if(ch.isDigit()) {
+            ++count
+        } else {
+            isCharacterContains = true
+            break
+        }
+    }
+    if(isCharacterContains)
+        println("Number contains alphabet")
+    else
+        println("Total Digits in $number is : $count")
+}
+------------------------------------------------------
+//Area of Circle
+fun main() {
+    val radius = 3
+    val pi = 3.15
+    val area = pi*radius*radius
+    println("Area of Circle : $area")
+}
+------------------------------------------------------
+//Area of rectangle
+fun main() {
+    val width = 10
+    val height = 5
+    val area = width * height
+    println("Area of Rectangle : $area")
+}
+------------------------------------------------------
+//Area of square
+fun main() {
+    val side = 15
+    val area = side * side
+    println("Area of Square : $area")
+}
+------------------------------------------------------
+//Area of Triangle
+fun main() {
+    val width = 15
+    val height = 24
+
+    val area = (width.times(height)).div(2)
+    println("Area of Triangle : $area")
+}
+------------------------------------------------------
+//Area of Cube
+fun main() {
+    val height = 10
+    val width = 15
+    val depth = 20
+    println("Area of Cube = ${height.times(width).times(depth)}")
+}
+------------------------------------------------------
+//Size of Cuboid
+fun main() {
+    val length = 10
+    val width = 15
+    val height = 20
+    val area = (length.times(width) + length.times(height) + width.times(height)).times(2)
+    println("Area of Cuboid : $area")
+}
+------------------------------------------------------
+fun main() {
+
+    //Formula of Cylinder : pi * r * r * h
+    //V=πr2h
+    val radius = 5
+    val height = 10
+
+    //area from google
+    val area = 3.14.times(radius).times(radius).times(height)
+    println("Area of Cylinder : $area")
+
+    //area from includehelp.com site (! considerable)
+    val area2 = 2.times(3.14).times(radius+height)
+    println("Area 2 : $area2")
+}
+------------------------------------------------------
+//Reverse No
+fun main() {
+    var number = 192
+    var sum = 0
+
+    while (number > 0) {
+        println("Number : $number")
+        val r = number % 10
+        println("Remainder : $r")
+        sum = sum * 10 + r
+        println("Sum : $sum")
+        number /= 10
+        println("Number at Last  : $number \n\n\n")
+    }
+    println("$number | $sum")
+
+    //Method = 2
+    val no = toReverse(number)
+    print(no)
+}
+
+fun toReverse(num: Int) : Int {
+    var tempNo = num
+    var no = ""
+    while (tempNo > 0) {
+        val remainder = tempNo%10
+        tempNo /= 10
+        no+="$remainder"
+    }
+    return no.toInt()
+}
+
+***************************OUTPUT****************
+Number : 192
+Remainder : 2
+Sum : 2
+Number at Last  : 19
+======================
+Number : 19
+Remainder : 9
+Sum : 29
+Number at Last  : 1
+======================
+Number : 1
+Remainder : 1
+Sum : 291
+Number at Last  : 0
+======================
+0 | 291
+
+------------------------------------------------------
+//check palindrome for no.
+fun main() {
+    var num = 151
+    val temp = num
+    var sum = 0
+
+    while(num > 0) {
+        val rem = num % 10
+        sum = sum * 10 + rem
+        num /= 10
+    }
+    if(sum == temp) println("Yes it is palindrome")
+    else println("No it is not")
+}
+------------------------------------------------------
+fun main() {
+    val from = 1
+    val to = 100
+    val palindromeList = arrayListOf<Int>()
+    for (index in from..to) {
+        if(isPalindrome(index)) {
+           palindromeList.add(index)
+       }
+    }
+    println(palindromeList)
+}
+//O(n*n) > Worst Case
+
+fun isPalindrome(num:Int) : Boolean{
+    var temp = num
+    var sum = 0
+    while (temp > 0) {
+        val rem = num%10
+        sum = sum * 10 + rem
+        temp /= 10
+    }
+    return num == sum
+}
+------------------------------------------------------
+//check is no binary
+fun main() {
+
+    val number = 100014010101011
+    var isBinary = false
+    for (num in number.toString().toCharArray()) {
+        val n = num.toString().toInt()
+        if(n == 0 || n == 1) {
+            isBinary = true
+        } else {
+            isBinary = false
+            break
+        }
+    }
+    println(if(isBinary) "Yes it is..!" else "No its not")
+
+    //Method -- 2
+    val isBin = isBinary(number)
+    println("Is Bin : $isBin")
+ }
+
+fun isBinary(num:Long) : Boolean{
+    var binNo = num
+    while (binNo > 0) {
+        if(binNo %10 > 1) return false
+        binNo /= 10
+    }
+    return true
+}
+------------------------------------------------------
+//Decimal --> Binary Conversion
+fun main() {
+    val givenNo = 128
+    println("Binary of $givenNo is : ${toBinary(givenNo)}")
+}
+private fun toBinary(num:Int) : String{
+    var tempNo = num
+    var binNo = ""
+    while (tempNo > 0) {
+        val remainder = tempNo % 2
+        binNo += "$remainder"
+        tempNo /= 2
+    }
+    return binNo.reversed()
+}
+------------------------------------------------------
+//Decimal --> Octal Conversion
+fun main() {
+    toOctal(112)
+}
+
+private fun toOctal(num: Int) {
+    var tempNo = num
+    var octNo = ""
+    while (tempNo > 0) {
+        val remainder = tempNo % 8
+        octNo += "$remainder"
+        tempNo /= 8
+    }
+    println("$num --> ${octNo.reversed()}")
+}
+------------------------------------------------------
+//Decimal to Hexadecimal
+fun main() {
+    toHex(154)
+}
+private fun toHex(num : Int) {
+    var temp = num
+    var hexNo = ""
+    while (temp > 0) {
+        val rem = temp%16
+        hexNo += getHexReminder(rem)
+        temp /= 16
+    }
+    println("$num --> ${hexNo.reversed()}")
+}
+fun getHexReminder(rem : Int) : String =
+    when(rem) {
+        10 -> "A"
+        11 -> "B"
+        12 -> "C"
+        13 -> "D"
+        14 -> "E"
+        15 ->  "F"
+        else -> "$rem"
+    }
+------------------------------------------------------
+//Decimal to Bin, Octal, Hexadecimal
+fun main() {
+    decimalToBinary(25)
+    decimalToOctal(48)
+    decimalToHex(200)
+}
+private fun decimalToBinary(num: Int) {
+
+    var temp = num
+    var toBin = ""
+    while (temp > 0) {
+        val remainder = temp % 2
+        toBin += "$remainder"
+        temp /= 2
+    }
+    println("$num in Binary --> ${toBin.reversed()}")
+}
+
+private fun decimalToOctal(num: Int ) {
+    var temp = num
+    var toOct = ""
+    while (temp > 0) {
+        val remainder = temp % 8
+        toOct += "$remainder"
+        temp /= 8
+    }
+    println("$num to Octal --> ${toOct.reversed()}")
+}
+
+private fun decimalToHex(num : Int) {
+    var temp = num
+    var hexNo = ""
+    while (temp > 0) {
+        val rem = temp%16
+        hexNo += getHexReminder(rem)
+        temp /= 16
+    }
+    println("$num --> ${hexNo.reversed()}")
+}
+fun getHexReminder(rem : Int) : String = when(rem) {
+        10 -> "A"
+        11 -> "B"
+        12 -> "C"
+        13 -> "D"
+        14 -> "E"
+        15 ->  "F"
+        else -> "$rem"
+    }
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+------------------------------------------------------
+
+        
