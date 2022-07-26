@@ -539,5 +539,77 @@ fun main() {
 
     // O(n*n) + O(n) + 6 ==> n(n+1) + 6  ...
 }
+===============================================================================================
+    
+//Multiplication of matrix
 
+import java.util.*
+
+//Add Matrix, show it consized method
+
+fun main() {
+
+    //Define Rows and column
+    val rows = 3
+    val column = 3
+
+    //Declare Array
+    val matrix1 = Array(rows) { IntArray(column) }
+    val matrix2 = Array(rows) { IntArray(column) }
+    val matrix3 = Array(rows) { IntArray(column) }
+
+    //Define input
+    val scanner = Scanner(System.`in`)
+    //-----------------------------------------------------> 6 - time
+
+    //Take First Matrix Elements
+    for (i in matrix1.indices) {
+        for (j in matrix1.indices) {
+            print("Enter matrix1[$i][$j] : ")
+            matrix1[i][j] = scanner.nextInt()
+        }
+    }
+    //--------------------------------------------------> O(n*n)
+    println("\n\n")
+
+    //Take Second Matrix Elements
+    for (i in matrix2.indices) {
+        for (j in matrix2.indices) {
+            print("Enter matrix2[$i][$j] : ")
+            matrix2[i][j] = scanner.nextInt()
+        }
+    }
+    //--------------------------------------------------> O(n*n)
+    println("\n\n")
+    //Print First Matrix
+    for (i in matrix1.indices) {
+        println(matrix1[i].contentToString())
+    }
+    //--------------------------------------------------> O(n*n)
+    println("\n\n")
+
+    //Print Second Matrix
+    for (i in matrix2.indices) {
+        println(matrix2[i].contentToString())
+    }
+    //--------------------------------------------------> O(n*n)
+
+
+    //Multiply Both Matrix1 * Matrix2
+    for (i in matrix1.indices) {
+        for (j in matrix2.indices) {
+            for (k in matrix3.indices) {
+                matrix3[i][j] += (matrix1[i][j] * matrix2[i][j])
+            }
+        }
+    }
+    //--------------------------------------------------> O(n*n*n)
+
+    println("\n\n")
+    for (i in matrix3.indices) {
+        println(matrix3[i].contentToString())
+    }
+    //--------------------------------------------------> O(n*n)
+    //-->  O(5*n*n) + O(n*n*n) => 5n*n(n+1)
+}
 
