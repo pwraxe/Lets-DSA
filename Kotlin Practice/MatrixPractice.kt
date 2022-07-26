@@ -356,4 +356,188 @@ fun main() {
 }
 
     
+======================================================================================================
+    
+    import java.util.*
+
+//Add Matrix
+
+fun main() {
+
+    //Define Rows and column
+    val rows = 3
+    val column = 3
+
+    //Declare Array
+    val matrix1 = Array(rows) { IntArray(column) }
+    val matrix2 = Array(rows) { IntArray(column) }
+    val matrix3 = Array(rows) { IntArray(column) }
+
+    //Define input
+    val scanner = Scanner(System.`in`)
+    //-----------------------------------------------------> 6 - time
+
+    //Take First Matrix Elements
+    for (i in matrix1.indices) {
+        for (j in matrix1.indices) {
+            print("Enter matrix1[$i][$j] : ")
+            matrix1[i][j] = scanner.nextInt()
+        }
+    }
+    //--------------------------------------------------> O(n*n)
+    println("\n\n")
+
+    //Take Second Matrix Elements
+    for (i in matrix2.indices) {
+        for (j in matrix2.indices) {
+            print("Enter matrix2[$i][$j] : ")
+            matrix2[i][j] = scanner.nextInt()
+        }
+    }
+    //--------------------------------------------------> O(n*n)
+    println("\n\n")
+    //Print First Matrix
+    for (i in matrix1.indices) {
+        println(matrix1[i].contentToString())
+    }
+    //--------------------------------------------------> O(n)
+    println("\n\n")
+
+    //Print Second Matrix
+    for (i in matrix2.indices) {
+        println(matrix2[i].contentToString())
+    }
+    //--------------------------------------------------> O(n)
+
+
+    //Lower Triangular matrix
+    outer@for (i in matrix1.indices) {
+        for (j in matrix1.indices) {
+            if(j > i) matrix1[i][j] = 0
+        }
+    }
+    println("\n")
+    //--------------------------------------------------> O(n*n) + 2
+    for (i in matrix1.indices) {
+        println(matrix1[i].contentToString())  //---------> O(n)
+    }
+
+    // O(3n*n) + O(2n) => 3n*n + 2n + n => 3n(n+1)
+}
+=====================================================================================================================
+    
+    import java.util.*
+
+//Add Matrix
+
+fun main() {
+
+    //Define Rows and column
+    val rows = 3
+    val column = 3
+
+    //Declare Array
+    val matrix1 = Array(rows) { IntArray(column) }
+    val matrix2 = Array(rows) { IntArray(column) }
+    val matrix3 = Array(rows) { IntArray(column) }
+
+    //Define input
+    val scanner = Scanner(System.`in`)
+    //-----------------------------------------------------> 6 - time
+
+    //Take First Matrix Elements
+    for (i in matrix1.indices) {
+        for (j in matrix1.indices) {
+            print("Enter matrix1[$i][$j] : ")
+            matrix1[i][j] = scanner.nextInt()
+        }
+    }
+    //--------------------------------------------------> O(n*n)
+    println("\n\n")
+
+    //Take Second Matrix Elements
+    for (i in matrix2.indices) {
+        for (j in matrix2.indices) {
+            print("Enter matrix2[$i][$j] : ")
+            matrix2[i][j] = scanner.nextInt()
+        }
+    }
+    //--------------------------------------------------> O(n*n)
+    println("\n\n")
+    //Print First Matrix
+    for (i in matrix1.indices) {
+        println(matrix1[i].contentToString())
+    }
+    //--------------------------------------------------> O(n)
+    println("\n\n")
+
+    //Print Second Matrix
+    for (i in matrix2.indices) {
+        println(matrix2[i].contentToString())
+    }
+    //--------------------------------------------------> O(n)
+
+
+    //Uppar Triangular matrix
+    outer@for (i in matrix1.indices) {
+        for (j in matrix1.indices) {
+            if(j < i) matrix1[i][j] = 0
+        }
+    }
+    println("\n")
+    //--------------------------------------------------> O(n*n) + 2
+    for (i in matrix1.indices) {
+        println(matrix1[i].contentToString())  //---------> O(n)
+    }
+
+    // O(3n*n) + O(2n) => 3n*n + 2n + n => 3n(n+1)
+}
+==================================================================================================================
+    
+import java.util.*
+//check even and odd numbers in matrix
+
+fun main() {
+
+    //Define Rows and column
+    val rows = 3
+    val column = 3
+
+    //Declare Array
+    val matrix1 = Array(rows) { IntArray(column) }
+
+    //Define input
+    val scanner = Scanner(System.`in`)
+    //-----------------------------------------------------> 6 - time
+
+    //Take First Matrix Elements
+    for (i in matrix1.indices) {
+        for (j in matrix1.indices) {
+            print("Enter matrix1[$i][$j] : ")
+            matrix1[i][j] = scanner.nextInt()
+        }
+    }
+    //--------------------------------------------------> O(n*n)
+    println("\n\n")
+    //Print First Matrix
+    for (i in matrix1.indices) {
+        println(matrix1[i].contentToString())
+    }
+    //--------------------------------------------------> O(n)
+
+    var evenCount = 0
+    var oddCount = 0
+    //Upper Triangular matrix
+    outer@for (i in matrix1.indices) {
+        for (j in matrix1.indices) {
+            if(matrix1[i][j] %2 == 0) evenCount++ else oddCount++
+        }
+    }
+    println()
+    println("Total $evenCount Even and $oddCount Odd No.s in matrix")
+
+
+    // O(n*n) + O(n) + 6 ==> n(n+1) + 6  ...
+}
+
 
