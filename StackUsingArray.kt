@@ -18,12 +18,15 @@ class FixedSizeStack<T> {
         elements = arrayOfNulls(capacity)
     }
 
-    fun push(item : T) {
+   fun push(item : T) {
         if(size == elements.size) {
-            val newStack = FixedSizeStack<T>(size+(size shr 1))
+            val newStack = arrayOfNulls<Any>(size+(size shr 1))
+            System.arraycopy(elements,0,newStack,0,size)
+            elements = newStack
         }
         elements[size++] = item
     }
+
 
     fun pop() {
         if(size == 0) throw StackUnderflowException("Can't Read, Stack Empty")
