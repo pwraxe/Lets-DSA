@@ -1,0 +1,22 @@
+/**
+ * TODO--> This Saturday, Perform CRUD Operation by
+ *  ******************************* DONE *******************
+ *  --> 1. Built-In-Array
+ *  --> 2. Vector
+ *  --> 3. SinglyLinkedList
+ *  --> 4. DoublyLinkedList
+ *  --> 5. Circular Singly Linked List
+ *  --> 6. Circular Doubly Linked List
+ *  --> 7. Create Stack Using Build In Array
+ *  --> 8. Create Stack Using Vector
+ *  --> 9. Create Stack Using SinglyLinkedList
+ *  --> 10. Create Stack Using DoublyLinkedList
+ *  --> 11. Create Queue Using Vector (From RTL) (Insert From Right and Remove From Left)
+ *  --> 12. Create Queue Using Vector (From LTR) (Insert From Left and Remove From Right)
+ *  --> 13. Create Queue Using SinglyLinkedList (From LTR), Enqueue From Front and Dequeue From Read
+ *  --> 14. Create Queue Using SinglyLinkedList (From RTL), Enqueue From Rear and Dequeue From Front
+ *  --> 15. Create Queue Using DoublyLinkedList (From LTR), Enqueue from Front Dequeue From Rear
+ *  --> 16. Create Queue Using DoublyLinkedList (From RTL), Enqueue From Rear and Dequeue From Front
+ *  ******************************* DOING ******************
+ *  ******************************* PENDING ****************
+ * **/
