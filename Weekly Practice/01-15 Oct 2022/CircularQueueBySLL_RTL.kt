@@ -18,8 +18,9 @@ class CircularQueueBySLL_RTL<T> {
 
         tailNode?.let {
             val tail = tailNode
-            tailNode = Node<T>(dataItem = item,null)
+            tailNode = Node<T>(dataItem = item,headNode)
             tail?.nextNode = tailNode
+            tailNode?.nextNode = headNode
             size++
         } ?: run {
             Node<T>(item,null).apply {
@@ -95,6 +96,7 @@ class CircularQueueBySLL_RTL<T> {
         headNode?.let {
             if(headNode?.nextNode != null) {
                 headNode = headNode?.nextNode
+                tailNode?.nextNode = headNode
                 size--
             } else {
                 headNode = null
