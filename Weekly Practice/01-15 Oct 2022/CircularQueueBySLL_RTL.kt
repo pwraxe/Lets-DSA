@@ -1,6 +1,6 @@
 //TODO --> 18. Circular Queue by SLL (RTL) Enqueue From Rear, Dequeue From Front
 
-class CircularQueueBySLL_LTR<T> {
+class CircularQueueBySLL_RTL<T> {
 
     inner class Node<T>(
         internal var dataItem : T?,
@@ -110,7 +110,7 @@ class CircularQueueBySLL_LTR<T> {
 
 fun main() {
 
-    CircularQueueBySLL_LTR<Any>().apply {
+    CircularQueueBySLL_RTL<Any>().apply {
 
         enqueue(10)
         enqueue(11)
