@@ -17,6 +17,13 @@
  *  --> 14. Create Queue Using SinglyLinkedList (From RTL), Enqueue From Rear and Dequeue From Front
  *  --> 15. Create Queue Using DoublyLinkedList (From LTR), Enqueue from Front Dequeue From Rear
  *  --> 16. Create Queue Using DoublyLinkedList (From RTL), Enqueue From Rear and Dequeue From Front
+ *  --> 17. Circular Queue by Vector (RTL) Enqueue From Right/Rear/End, Dequeue From Left/Front/Start
+ *  --> 18. Circular Queue by Vector (LTR) Enqueue From Left/Front/Start AND Dequeue From Right/Rear/End
+ *  --> 19. Circular Queue by SLL (RTL) Enqueue From Rear, Dequeue From Front
+ *  --> 20  Circular Queue by SLL (LTR) Enqueue From Front, Dequeue From Rear
+ *  --> 21. Circular Queue by DLL (RTL) Enqueue From Rear, Dequeue From Front
+ *  --> 22. Circular Queue by DLL (LTR) Enqueue From Front, Dequeue From Rear
+ *  --> 23. HashMap
  *  ******************************* DOING ******************
  *  ******************************* PENDING ****************
  * **/
