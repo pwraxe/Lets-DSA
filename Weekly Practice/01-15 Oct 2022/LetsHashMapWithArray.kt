@@ -10,6 +10,10 @@
  *  -> try to make dynamic array
  * **/
 //Own Code, Own Program
+//Analysis
+//This code have worst case complexity, 
+//Bcoz, each time insert or update need to search element i.e O(n)
+//CRUD : O(n)
 
 class LetsHashMapWithArray<K,V> {
 
