@@ -23,3 +23,4 @@ fun <T> Collection<T>.linearSearch(element: T) : Int {
     }
     return -1
 }
+//Time Complexity : O(n)
