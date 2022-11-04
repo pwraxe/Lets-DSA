@@ -21,6 +21,27 @@ fun main() {
     println(comp)
 
 }
+
+//Third Time
+//Best Case Scenario in The Worst Case Scenario     :   O(log n)
+fun <T : Comparable<T>> List<T>.binSearch(element: T) : Int {
+
+    var startIndex = 0
+    var endIndex = this.size-1
+
+    while (startIndex <= endIndex) {
+        val midIndex = (startIndex + endIndex) / 2
+        val valueAtIndex = this[midIndex]
+        val compValue = valueAtIndex.compareTo(element)
+
+        if(compValue < 0) startIndex = midIndex + 1
+        else if(compValue > 0) endIndex = midIndex - 1
+        else return midIndex
+    }
+    return -1
+}
+
+
 //Second Time
 fun binSearch(list: ArrayList<Int>, element: Int) : Int {
 
