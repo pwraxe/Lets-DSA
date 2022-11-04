@@ -19,8 +19,31 @@ fun main() {
             "2.c(2) : ${2.compareTo(2)} \n"         // 0
 
     println(comp)
-
 }
+
+//------------------------------------------------------------------------------
+//Fourth Time
+//Here I am comparing element with list element,
+//based on comparison, will go foreword or backward
+fun <T : Comparable<T>> List<T>.binSearch(element: T) : Int {
+
+    var startIndex = 0
+    var endIndex = this.size-1
+
+    while (startIndex <= endIndex) {
+
+        val midIndex = (startIndex + endIndex) / 2
+        val midValue = this[midIndex]
+
+        if (midValue > element) endIndex = midIndex - 1
+        else if (midValue < element) startIndex = midIndex + 1
+        else return midIndex
+    }
+
+    return -1
+}
+
+//------------------------------------------------------------------------------
 
 //Third Time
 //Best Case Scenario in The Worst Case Scenario     :   O(log n)
@@ -41,6 +64,7 @@ fun <T : Comparable<T>> List<T>.binSearch(element: T) : Int {
     return -1
 }
 
+//------------------------------------------------------------------------------
 
 //Second Time
 fun binSearch(list: ArrayList<Int>, element: Int) : Int {
@@ -57,6 +81,10 @@ fun binSearch(list: ArrayList<Int>, element: Int) : Int {
     }
     return -1
 }
+
+
+//------------------------------------------------------------------------------
+
 
 //First Time
 fun <T : Comparable<T>> List<T>.binarySearch(element:T) : Int {
