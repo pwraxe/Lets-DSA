@@ -1,8 +1,11 @@
 /**
-** Studied and Practice From Book
-** See Own Practice Code Below this code 
+** First Code : Studied and Practice From Book
+** Second Code : See Own Practice Code Below this code 
+** Third Code : Tried to approach same goal with ascii value
 **/
 
+
+//First Code
 fun main() {
 
     val string = "ABCDEFGHIJKOTLINLMOONOPQRST"
@@ -81,6 +84,7 @@ fun rollHash(
 //=========================================================================================================================
 
 
+//Second Code
 //Rabin-Krp Trying to Solved Own Way with same stategy
 import kotlin.math.pow
 
@@ -135,4 +139,73 @@ fun hashOfChar(char: Char, patternLength: Int): Long {
     return (char.code.toDouble() * (97.0.pow(patternLength))).toLong()
 }
  
+//=========================================================================================================================
+
+//Third Code
+/**
+ * Rabin Karp Uses Hash Function to search
+ * But I am trying to use index and ascii code for achieving same goal like rabin karp
+ * Method And approch same as Rabin-Karp
+ * **/
+
+fun main() {
+
+    val text = "ABCDEFGHIJKLMOONPQRSTUVWXYZ"
+    val pattern = "MOONP"
+    val index = text.searchPatternByRabinKarp<String>(pattern)
+    println("Pattern Index : $index")
+
+}
+
+fun <T : Comparable<T>> String.searchPatternByRabinKarp(pattern: String) : Int {
+    val patternLength = pattern.length
+    val textLength = this.length - patternLength
+    var subString = this.substring(0,patternLength-1)
+    val hashOfPattern = robinHashForSubString(pattern)
+    var hashOfSubString = robinHashForSubString(subString)
+    if(hashOfSubString == hashOfPattern && subString == pattern) {
+        return 0
+    }
+
+    for (index in 1 .. textLength) {
+
+        subString = this.substring(index,index+patternLength)
+        val oldSubString = this.substring(index-1,index+patternLength-1)
+        hashOfSubString = rollingHash(oldSubString,subString)
+        if(hashOfSubString == hashOfPattern && subString == pattern) {
+            return index
+        }
+    }
+
+    return -1
+}
+
+fun rollingHash(oldString: String, newString: String) : Int {
+
+    /** Approach/Algo
+     * -> getHash of first char
+     * -> getHash of Last char
+     * -> getHash of Given String
+     * -> remove hashOfFirstChar from oldString and store in 'commonChars' variable
+     * -> add hashOfNewString to 'commonChars' variable
+     * -> return 'commonChars'
+     * **/
+
+    val oldCharHash = oldString[0].hashCodeOfChar()
+    val newCharHash = newString[newString.length-1].hashCodeOfChar()
+    val oldStringHash = robinHashForSubString(oldString)
+    val commonChars = oldStringHash - oldCharHash
+    return commonChars + newCharHash
+}
+
+fun robinHashForSubString(subString: String) : Int {
+    var hash = 0
+    subString.forEachIndexed { index, c ->
+        hash += c.hashCodeOfChar()
+    }
+    return hash
+}
+
+fun Char.hashCodeOfChar() : Int = this.code
+
 
