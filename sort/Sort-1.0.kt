@@ -1,13 +1,13 @@
 fun main() {
     val list = intArrayOf(5,7,2,1,0,2,3,9,55,7,8,25,10,-10)
     
-    println(list.letsSortByBubble().contentToString())
+    println(list.letsSort().contentToString())
 
-    println(list.toMutableList().bubbleSort())
+    println(list.toMutableList().rawSort())
 
 }
 
-fun <T : Comparable<T>> MutableList<T>.bubbleSort(): MutableList<T> {
+fun <T : Comparable<T>> MutableList<T>.rawSort(): MutableList<T> {
     for (i in 0 until size) {
         for (j in 0 until size-1) {
 
@@ -24,7 +24,7 @@ fun <T : Comparable<T>> MutableList<T>.bubbleSort(): MutableList<T> {
     return this
 }
 
-fun IntArray.letsSortByBubble() : IntArray {
+fun IntArray.letsSort() : IntArray {
     for (i in 0 until this.size) {
         for (j in 0 until this.size-1) {
             //if(this[j] > this[i]) {} --> toSort Ascending Order
