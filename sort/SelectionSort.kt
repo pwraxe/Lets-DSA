@@ -5,12 +5,12 @@ fun main() {
 
 fun selectionSort(list: IntArray) : IntArray {
 
-    //taking 0 as minimum index, becoz when swap, we will swap using index
-    var minIndex = 0
-
     //interate 'i' to end of list with 1 index before
     for (i in 0 until list.size-1) {
 
+        //taking i as minimum index, becoz when swap, we will swap using index
+        var minIndex = i
+        
         //j start from 1st index, to find minimum than 'minIndex' value index
         for (j in (i+1) until list.size) {
             if(list[minIndex] > list[j]) minIndex = j
