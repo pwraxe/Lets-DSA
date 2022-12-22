@@ -13,7 +13,7 @@ fun main() {
     println("Merge Sort : ${mergeSorted.contentToString()}")
 }
 
-//Bubble Sort
+//Bubble Sort  :  O(n*n)
 fun bubbleSort(list: IntArray) : IntArray {
 
     for (i in 0 until list.size-1) {
@@ -28,7 +28,7 @@ fun bubbleSort(list: IntArray) : IntArray {
     return list
 }
 
-//Selection Sort
+//Selection Sort : O(n*n)
 fun selectionSort(list: IntArray) : IntArray {
 
     for (i in 0 until list.size-1) {
@@ -45,7 +45,7 @@ fun selectionSort(list: IntArray) : IntArray {
     return list
 }
 
-//Insertion Sort
+//Insertion Sort  :  O(n*n)
 fun insertionSort(list: IntArray) : IntArray {
 
     for (i in 1 until list.size) {
@@ -62,7 +62,7 @@ fun insertionSort(list: IntArray) : IntArray {
     return list
 }
 
-//Merge Sort
+//Merge Sort  :  O(n log n)
 fun mergeSort(list: IntArray) : IntArray {
 
     if(list.size <= 1) return list
