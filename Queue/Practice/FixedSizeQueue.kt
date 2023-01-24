@@ -23,9 +23,8 @@ class LetsFixedSizeQueue<T>(capacity: Int) {
             //You can throw exception here
             println("No More Dequeue, size : $size")
         } else {
-            elements[size-1] = null
-            size--
-
+            System.arraycopy(elements,1,elements,0,--size)
+            elements[size] = null
         }
     }
 
