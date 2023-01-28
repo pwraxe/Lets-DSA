@@ -10,10 +10,20 @@ class LetsCircularFixedQueue<T>(var capacity : Int = 6) {
     private var front = -1
     private var rear = -1
 
-    fun enqueue(item: T?) {
+     fun enqueue(item: T?) {
         if(isQueueFull()) {
+
+            //If you want to stop when Queue Full then 
+            /**
             println("Cannot insert value $item, Queue is Full")
             return
+            **/
+
+            //If you want to incrase size of Queue when it fulls then
+            val incCapacity = size shr 1
+            val newList = arrayOfNulls<Any>(size+incCapacity)
+            System.arraycopy(elements,0,newList,0,size)
+            elements = newList
         }
         rear = (rear+1) % capacity
         elements[rear] = item
