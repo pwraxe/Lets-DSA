@@ -53,6 +53,9 @@ fun main() {
         push(11)
         push(12)
         push(13)
+        
+        pop()
+        pop()
 
         println("size : ${stackSize()} | Peek : ${peek()} | is-MT : ${isEmpty()}")
 
