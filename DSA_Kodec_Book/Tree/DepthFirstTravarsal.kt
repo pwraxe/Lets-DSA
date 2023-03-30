@@ -56,3 +56,39 @@ fun main() {
         println(it.dataItem)
     }
 }
+=============================================================================================================================
+typealias Visitor<T> = (TreeNode<T>) -> Unit
+
+class TreeNode<T>(val dataItem: T) {
+    private var children = mutableListOf<TreeNode<T>>()
+
+    fun addNode(node: TreeNode<T>) {
+        children.add(node)
+    }
+
+    fun letsTravelToDepthFirst(visitor: Visitor<T>) {
+        visitor(this)
+        children.forEach {
+            it.letsTravelToDepthFirst(visitor)
+        }
+    }
+}
+
+fun main() {
+    val root = TreeNode(1)
+    val leftRoot = TreeNode(10)
+    val rightRoot = TreeNode(20)
+
+    val leftLeft = TreeNode(5)
+    val leftRight = TreeNode(7)
+
+    root.addNode(leftRoot)
+    root.addNode(rightRoot)
+
+    leftRoot.addNode(leftLeft)
+    leftRoot.addNode(leftRight)
+
+    root.letsTravelToDepthFirst {
+        println(it.dataItem)
+    }
+}
