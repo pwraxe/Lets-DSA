@@ -58,16 +58,14 @@ class LetsBinaryTree<T>(private val dataItem: T) {
     }
 
     fun deSerialisedPreOrder(list: MutableList<T?>) : LetsBinaryTree<T?>? {
-        println("---> ${list.removeAt(list.size-1)}")
-        val rootValue = list.removeAt(list.size-1) ?: return null
+        if(list.size <= 0) return null
+        val rootValue = list.removeAt(list.size-1) //?: return null
 
         val root = LetsBinaryTree<T?>(rootValue)
         root.leftNode = deSerialisedPreOrder(list)
         root.rightNode = deSerialisedPreOrder(list)
         return root
     }
-
-
 }
 
 fun main() {
