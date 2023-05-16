@@ -5,6 +5,14 @@ class TreeNode<T> (var dataItem: T) {
 
     val minValue : TreeNode<T>
         get() = leftNode?.minValue ?: this
+    
+    override fun equals(other: Any?): Boolean {
+        return if(other != null && other is TreeNode<*>) {
+            this.dataItem == other.dataItem
+            && this.leftNode == other.leftNode
+            && this.rightNode == other.rightNode
+        } else false
+    }
 
     fun letsPreOrderTraversal(visitor: Visitor<T>){
         visitor(dataItem)
@@ -91,6 +99,21 @@ class BinaryTree<T : Comparable<T>> {
             print("$it, ")
         }
     }
+
+    //Challenge 1 :IsBST?
+    fun isBST() : Boolean = isBinaryTree(rootNode, null, null)
+    private fun isBinaryTree(node: TreeNode<T>?, min:T?,max:T?) : Boolean {
+
+        //Base Code
+        node ?: return true
+
+        if(min != null && node.dataItem <= min) return false
+        else if(max != null && node.dataItem > max) return false
+
+        return isBinaryTree(node.leftNode,min, node.dataItem)
+                && isBinaryTree(node.rightNode, node.dataItem, max)
+    }
+
 }
 
 fun main() {
@@ -103,15 +126,16 @@ fun main() {
         insert(30)
         insert(40)
 
-        println("contains : ${contains(20)} | ${contains(120)}")
+        println("contains : ${contains(20)} | ${contains(120)} || ${isBST()}")
         printAll()
 
         remove(80)
 
         printAll()
-
     }
 }
+
+
 /****OUTPUT
 contains : true | false
 Pre Order : 
