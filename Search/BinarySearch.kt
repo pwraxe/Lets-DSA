@@ -1,4 +1,23 @@
+fun main() {
+    val list = listOf(1,2,3,4,5,6,7,8,9)
+    val index = binarySearch(3,list)
+    println("Index : $index | Value : ${list[index]}")
+}
 
+fun binarySearch(key: Int, list: List<Int>) : Int {
+
+    var startIndex = 0
+    var endIndex = list.size-1
+
+    while (startIndex < endIndex) {
+        val middleIndex = (startIndex + endIndex) / 2
+        if(key > list[middleIndex]) startIndex = middleIndex+1
+        else if(key < list[middleIndex]) endIndex = middleIndex-1
+        else return middleIndex
+    }
+    return -1
+}
+//------------------------------------------------------------------------------
 fun main() {
     //val list = arrayListOf("A","B","C","D","E","F","G","H","I","J","K","L")
     val list = arrayListOf(1,2,3,4,5,6,7,8,9,10,11,12)
