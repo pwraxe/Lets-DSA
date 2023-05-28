@@ -1,0 +1,4 @@
+Find LEFT CHILD of Node : (2i + 1)   //i = index 
+Find RIGHT CHILD of Node : (2i + 2)  //i = index
+
+Fina PARENT of Child :  ((i - 1)/2).toInt()
