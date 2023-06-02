@@ -16,3 +16,18 @@ fun fibonassi(till: Int) {
     
     println(list.toTypedArray().contentToString())
 }
+
+//================================================================
+
+//Problem: Print Fibonnasi Series using Recursion
+fun main() {
+    
+    repeat(10) {
+    	print("${fibonassi(it)}, ")    
+    }
+}
+
+fun fibonassi(num: Int) : Int {
+   	if(num <= 1) return num
+    return fibonassi(num-1) + fibonassi(num-2)
+}
