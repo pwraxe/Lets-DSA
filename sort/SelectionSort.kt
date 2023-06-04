@@ -6,7 +6,7 @@ fun main() {
 fun selectionSort(list: IntArray) : IntArray {
 
     //interate 'i' to end of list with 1 index before
-    for (i in 0 until list.size-1) {
+    for (i in 0 until list.size) {
 
         //taking i as minimum index, becoz when swap, we will swap using index
         var minIndex = i
