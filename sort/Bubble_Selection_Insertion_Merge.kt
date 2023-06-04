@@ -31,10 +31,10 @@ fun bubbleSort(list: IntArray) : IntArray {
 //Selection Sort : O(n*n)
 fun selectionSort(list: IntArray) : IntArray {
 
-    for (i in 0 until list.size-1) {
+    for (i in 0 until list.size) {
         var minValueIndex = i
 
-        for (j in (i+1) until list.size-1) {
+        for (j in (i+1) until list.size) {
             if(list[minValueIndex] > list[j]) minValueIndex = j
         }
         val temp = list[i]
