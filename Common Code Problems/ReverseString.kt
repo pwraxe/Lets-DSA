@@ -24,7 +24,7 @@ fun reverseString(input: String) : String {
     var right = text.length-1
     while(left < right) {
         text[left] = text[right].also{ text[right] = text[left] }
-		left++
+	left++
         right--
     }
     return text.toString()
