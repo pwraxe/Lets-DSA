@@ -2,3 +2,16 @@ Find LEFT CHILD of Node : (2i + 1)   //i = index
 Find RIGHT CHILD of Node : (2i + 2)  //i = index
 
 Fina PARENT of Child :  ((i - 1)/2).toInt()
+
+NOTE: For IMP
+
+- When We insert element in list and then try for Either minHeap or Max Heap, we usually starts from lastIndex and goes to 0th index
+- When We Remove Element we can remove only and only root element (0th index) from array by swapping 0th index element with last index element
+  then we Go from 0th index to last index by finding leftChildIndex and rightChildIndex
+
+
+
+
+
+
+
