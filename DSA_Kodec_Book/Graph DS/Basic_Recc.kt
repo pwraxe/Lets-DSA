@@ -79,6 +79,19 @@ class GraphImplList<T> : Graph<T> {
             println()
         }
     }
+
+    /**
+    fun readAll() {
+        adjacencies.forEach {
+            print("${it.key.dataItem} --> [")
+            it.value.forEach {
+                //println("(${it.startVertex.dataItem} | ${it.startVertex.index})----${it.weight}----(${it.destinationVertex.dataItem} | ${it.destinationVertex.index})")
+                print("${it.destinationVertex.dataItem}, ")
+            }
+            println("]")
+        }
+    }
+    */
 }
 
 
