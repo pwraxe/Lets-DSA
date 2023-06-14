@@ -83,13 +83,33 @@ class GraphImplByMatrix<T> : Graph<T> {
         return weightMatrix[startVertex.index][destinationVertex.index] ?: 0.0
     }
 
+    
     fun readAll() {
+
+        //A -->  B, D
+        //B --> A, C, D
+
+        (0 until vertices.size).forEach { index ->
+            val vertex = vertices[index]
+            print("${vertex.dataItem} --> ")
+
+            weightMatrix[index].forEachIndexed { i, weight ->
+                if(weight != 0.0) {
+                    print("${vertices[i].dataItem}, ")
+                }
+            }
+            println()
+        }
+
+        /***
         weightMatrix.forEach {
             it.forEach {
                 print("$it      ")
             }
             println()
         }
+
+        **/
     }
 }
 
