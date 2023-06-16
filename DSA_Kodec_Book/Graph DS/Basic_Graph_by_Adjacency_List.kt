@@ -92,8 +92,80 @@ class GraphImplList<T> : Graph<T> {
         }
     }
     */
+
+        fun breadthFirstSearch(source: Vertex<T>) : MutableSet<Vertex<T>> {
+
+        val queue = QueueStack<Vertex<T>>()
+        val enqueued = mutableSetOf<Vertex<T>>()
+
+        queue.enqueue(source)
+        enqueued.add(source)
+
+        while (true) {
+            val vertex = queue.dequeue() ?: break
+            enqueued.add(vertex)
+            getAllVertexEdges(vertex).forEach {
+                if(!enqueued.contains(it.destinationVertex)) {
+                    queue.enqueue(it.destinationVertex)
+                    enqueued.add(it.destinationVertex)
+                }
+            }
+        }
+
+        return enqueued
+    }
+
+    fun depthFirstSearch(source:Vertex<T>) : MutableList<Vertex<T>> {
+        val stack = LetsStack<Vertex<T>>()
+        val pushedElements = mutableListOf<Vertex<T>>()
+
+        stack.push(source)
+        pushedElements.add(source)
+
+        outer@while (true) {
+            if(stack.isEmpty()) break
+            val vertex = stack.peek() as Vertex<T>
+            val neighbor = getAllVertexEdges(vertex)
+            if(neighbor.isEmpty()) {
+                stack.pop()
+                continue
+            }
+
+            for (i in 0 until neighbor.size) {
+                val destination = neighbor.elementAt(i).destinationVertex
+                if(destination !in pushedElements) {
+                    stack.push(destination)
+                    pushedElements.add(destination)
+                    continue@outer
+                }
+            }
+            stack.pop()
+        }
+        return pushedElements
+    }
 }
 
+class QueueStack<T>() {
+    private val elements = arrayListOf<T>()
+    fun enqueue(item: T) {
+        elements.add(item)
+    }
+    fun dequeue() : T? {
+        return if(elements.isNotEmpty()) elements.removeAt(0) else null
+    }
+}
+
+class LetsStack<T> {
+    private val elements = arrayListOf<T>()
+    fun push(item: T) {
+        elements.add(item)
+    }
+    fun pop() : T? {
+        return if(elements.isNotEmpty()) elements.removeLast() else null
+    }
+    fun isEmpty() = elements.isEmpty()
+    fun peek() : T? = if(!isEmpty()) elements[elements.size-1] else null
+}
 
 fun main() {
 
@@ -139,5 +211,13 @@ fun main() {
         addEdge(vertexH,vertexG,10.0,EdgeType.UNDIRECTED)
 
         readAll()
+
+         breadthFirstSearch(vertexA).forEach {
+            print("${it.dataItem}, ")
+        }
+
+        depthFirstSearch(vertexA).forEach {
+            print("${it.dataItem}, ")
+        }
     }
 }
