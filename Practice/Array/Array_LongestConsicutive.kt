@@ -36,3 +36,44 @@ fun main() {
     val result = LeetcodeSolution().longestConsecutive(list1)
     println("Longest Consecutive : $result")
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+
+//Approch 2
+/**
+ * Topic: Array
+ * Leetcode Problem 128: Longest Consecutive Sequence
+ * Level: Easy
+ * TimeComplexity: O(n log n)
+ *
+ * **/
+class Solution {
+
+    //Approach two 
+    fun longestConsecutive(nums: IntArray): Int {
+        //Sort : O(log_n)
+        nums.sort()
+
+        var maxLength = 1
+        var sequenceLenth = 1
+
+        //TimeComplexity: O(n)
+        for(i in 1 until nums.size) {
+            
+            //Check current and previous value
+            if(nums[i] == nums[i-1]+1) {
+                sequenceLenth++
+            } 
+            //Checks prev value is same as currentValue
+            else if(nums[i] == nums[i-1]) {
+                continue
+            } else {
+                //Reset sequence Length
+                sequenceLenth = 1
+            }
+            //get max value
+            maxLength = Math.max(maxLength, sequenceLenth)
+        }
+        return maxLength
+    }
+}
