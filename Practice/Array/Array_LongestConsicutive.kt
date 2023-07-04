@@ -2,17 +2,24 @@
  * Topic: Array
  * Problem: Longest Consecutive Sequence
  * Level: Easy
- * TimeComplexity: O(n*n)
+ * TimeComplexity: O(n*n*n)
  *
  * **/
 class LeetcodeSolution {
 
-    //Brute force Approach
+    //Brute force Approach 
+    //Overall Time Complexity : O(n*n*n) || O(n3)
     fun longestConsecutive(list: IntArray) : Int {
         var result = 0
-        list.forEach {
+
+        //forEach execute n times
+        list.forEach {      //---------------> n times
             var currentNum = it
-            while(list.contains(currentNum)) {
+
+            //while loop executes n times until next no found in list, 
+            //contains -- checks the number in entire array which takes n times
+            //Time Complexity : O(n*n)
+            while(list.contains(currentNum)) { //----while n times and contains n times --> n2
                 currentNum++
             }
             result = Math.max(result, currentNum-it)
