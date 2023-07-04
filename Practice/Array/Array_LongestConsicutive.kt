@@ -1,13 +1,13 @@
 /**
  * Topic: Array
- * Problem: Longest Consecutive Sequence
- * Level: Easy
- * TimeComplexity: O(n*n*n)
- *
+ * Leetcode Problem 128: Longest Consecutive Sequence
+ * Leetcode Level: Easy / Accepted
+ * Time Complexity: O(n*n*n)
  * **/
+
+//Brute force Approach 
 class LeetcodeSolution {
 
-    //Brute force Approach 
     //Overall Time Complexity : O(n*n*n) || O(n3)
     fun longestConsecutive(list: IntArray) : Int {
         var result = 0
