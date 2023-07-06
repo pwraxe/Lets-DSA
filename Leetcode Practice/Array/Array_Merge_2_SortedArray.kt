@@ -1,3 +1,33 @@
+//Leetcode 88: Merge two Sorted array
+//Time Complexity : O(n)
+//Space Complexity: O(1) //No More list used
+class Solution {
+    fun merge(nums1: IntArray, m: Int, nums2: IntArray, n: Int): Unit {
+        
+        var i = m
+        var j = n
+        var lastIndex = (m+n)-1
+        
+        while(i > 0 && j > 0) {
+            
+            if(nums1[i-1] > nums2[j-1]) {
+                nums1[lastIndex] = nums1[i-1]
+                i--
+            } else {
+                nums1[lastIndex] = nums2[j-1]
+                j--
+            }
+            lastIndex--
+        }
+        
+        while(j > 0) {
+            nums1[lastIndex] = nums2[j-1] 
+            lastIndex-- 
+            j--
+        }
+    }
+}
+
 
 //===========================================================================My Wrong Code 😂 =====================
 //Works Correctly on nums1 : [1,2,3,0,0,0], nums2 : [2,5,6]
