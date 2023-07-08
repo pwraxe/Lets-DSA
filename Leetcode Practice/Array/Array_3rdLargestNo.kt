@@ -1,5 +1,30 @@
 //Leetcode: Third Largest No
 //TC: O(n), loop used
+//SC: O(1), No Extra space used
+
+class Solution {
+    fun thirdMax(nums: IntArray): Int {
+        nums.sortDescending()
+        
+        var count = 1
+        var index = 1
+        
+        while(index < nums.size) {
+            //This line could be useless if we dont think repeatation of number, 
+            if(nums[index-1] > nums[index]) count++    
+            if(count == 3) return nums[index]
+            index++
+        }
+        return nums[0]
+        
+    }
+}
+
+
+//----------------------------------------------------------------------------------------------------------------------------
+
+//Leetcode: Third Largest No
+//TC: O(n), loop used
 //SC: O(1), both Queue and Hashset has max 3 elements hence considered as Constant Space Complexity
 
 class Solution {
