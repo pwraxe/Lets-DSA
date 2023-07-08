@@ -1,4 +1,24 @@
 //Leetcode : Move Zero
+//TC: O(n), used loop
+//SC: O(1), no extra memory used, in-place operation
+class Solution {
+    fun moveZeroes(nums: IntArray): Unit {
+        
+        var i = 0
+        var j = 0
+        while(j < nums.size) {
+            if(nums[j] != 0) {
+                nums[i] = nums[j].also { nums[j] = nums[i] }
+                i++
+            }
+            j++
+        }
+    }
+}
+
+//---------------------------------------------------------------------
+
+//Leetcode : Move Zero
 //TC: O(n2) , used while twice
 //SC : O(1), no extra memory used, in-place operation
 class Solution {
