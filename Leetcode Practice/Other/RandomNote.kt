@@ -18,3 +18,24 @@ class Solution {
         return true
     }
 }
+
+//-------------------------------------------------------------------------------------------------------------------------
+//TC: O(n), used loop once
+//SC: O(n), Why?, I don't know how much length of string I will have as a input in Runtime, and I converted to list, thats why O(1)
+//Better to use HashMap, for DC: O(1), 
+class Solution {
+    fun canConstruct(ransomNote: String, magazine: String): Boolean {
+        val magz = magazine.toMutableList()
+        val note = ransomNote.toMutableList()
+
+        note.forEach {
+            //remove element
+            //if true then remve next else return false
+            val removed: Boolean = magz.remove(it)
+            if(!removed) {
+                return false
+            }
+        }
+        return true
+    }
+}
