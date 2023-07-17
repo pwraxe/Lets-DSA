@@ -1,5 +1,43 @@
 //Leetcode: Clone Linked List
 
+//TC: O(n)
+//SC: O(1)
+class Solution {
+    fun copyRandomList(head: Node?): Node? {
+        if (head == null) return null
+
+        // Step 1: Create new nodes and insert them after the original nodes
+        var root = head
+        while (root != null) {
+            val newNode = Node(root.`val`)
+            newNode.next = root.next
+            root.next = newNode
+            root = newNode.next
+        }
+
+        // Step 2: Update random pointers of the new nodes
+        root = head
+        while (root != null) {
+            root.next?.random = root.random?.next
+            root = root.next?.next
+        }
+
+        // Step 3: Separate the original and copied lists
+        val newHead = head.next
+        var original = head
+        var copied = newHead
+        while (original != null) {
+            original.next = original.next?.next
+            copied?.next = copied?.next?.next
+            original = original.next
+            copied = copied?.next
+        }
+
+        return newHead
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------------------------
 //TC: O(n), used loop
 //SC: O(n), used map
 class Solution {
