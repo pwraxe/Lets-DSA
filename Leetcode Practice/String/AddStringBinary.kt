@@ -5,7 +5,8 @@
 
 class Solution {
     fun addBinary(a: String, b: String): String {
-        var result = StringBuilder()
+        //var result = StringBuilder()  //Runtime: 220 ms
+        var result = StringBuffer()     //Runtime: 190 ms
         var lastIndexOfA = a.length-1
         var lastIndexOfB = b.length-1
         var sum = 0
