@@ -1,3 +1,21 @@
+class Solution {
+    fun longestCommonPrefix(strs: Array<String>): String {
+        if(strs.size == 0) return ""
+        
+        //|f|l|o|w|e|r|
+        var prefix = ""
+        
+        strs[0].forEachIndexed { i, ch -> 
+            prefix += ch
+            //string - "flower"
+            strs.forEachIndexed {j, text ->
+                if(!text.startsWith(prefix)) return prefix.substring(0, prefix.length-1)
+            }
+        }
+        return strs[0].toString()
+    }
+    
+}
 
 //--------------------------------From Soluton by own
 class Solution {
