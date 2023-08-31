@@ -28,3 +28,8 @@ fun todo() {
   remove element
 }
 
+===========================================================================
+When Body Executes before recursive function calls, input is always in sequential order
+When Body Executes after recursive call input is always in reverse order
+Ex. print no before and after sending half of no. to recursive call
+
