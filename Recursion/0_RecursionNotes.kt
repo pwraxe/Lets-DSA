@@ -30,7 +30,7 @@ fun todo() {
 
 ===========================================================================================
 When Body Executes before recursive function calls, input is always in sequential order
-When Body Executes after recursive call input is always in reverse order
+When Body Executes after a recursive call input is always in reverse order
 Ex. print no before and after sending half of no. to recursive call
 
 ===========================================================================================
@@ -38,5 +38,13 @@ Ex. print no before and after sending half of no. to recursive call
   Advantages of Uses of MEMORISATION
 - Reduce Time Complexity
 - Reduce No of Function call based on intermediate result or cache
+===========================================================================================
 
+Space Complexity of Recursion
+-  Recursive Related  (In Short--> Recursion uses internal stack)
+    -> using stack internally 
+    -> function param and local variable in the stack, 
+    -> Stack reserved memory for recursive functions
 
+- Non-Recursive Related (recursion uses global variable for storing result)
+    -> AKA Memorisation
