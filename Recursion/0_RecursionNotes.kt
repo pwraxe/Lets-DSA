@@ -48,3 +48,10 @@ Space Complexity of Recursion
 
 - Non-Recursive Related (recursion uses global variable for storing result)
     -> AKA Memorisation
+===========================================================================================
+
+  Tips 
+    -> Define Recursion function
+    -> Define Recursion relation and base case
+    -> if possible, use memorization
+    -> if possible, use tail recursion
