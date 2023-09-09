@@ -1,0 +1,1 @@
+Set Vs HashSet, Does hashset have index in memory? why hashSet starts with 0th index?
