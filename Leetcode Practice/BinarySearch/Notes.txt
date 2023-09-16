@@ -1,4 +1,32 @@
 3 Parts of a Successful Binary Search
-1) Pre-processing - Sort if collection is unsorted.
+1) Pre-processing - Sort if the collection is unsorted.
 2) Binary Search - Using a loop or recursion to divide search space in half after each comparison
 3) Post-processing - Determine viable candidates in the remaining space.
+
+Binary Search Has-A 3 Template
+
+Template 1
+=================================================================================================
+fun binSearch(list, target): Int {
+        if(list size 0) return -1
+        var start = 0
+        var end = lastIndexOfList
+
+        while(start < end) {
+            val midIndex = start + (end-start) / 2
+            when {
+                //Update Start (take second half list)
+                midIndexValue > target -> start = midIndex + 1
+
+                //Update End (take first half list)
+                midIndexValue < target -> end = midIndex - 1
+
+                //target found return index
+                midIndexValue == target -> return midIndex
+
+                //No Item found return -1 
+                else -> return -1
+            }
+        }
+        return -1
+}
