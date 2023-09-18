@@ -56,7 +56,26 @@ fun doBinSearch(nums: IntArray, target: Int): Int {
 
 
 
+Template 3
+=================================================================================================
+class Solution {
+    
+    fun binSearchTemplate(nums: IntArray, target: Int) : Int {
+        if(nums.size == 0 || nums.isEmpty()) return -1
+        var start = 0
+        var end = nums.size-1
+        
+        while (start+1 < end) {
+            val midIndex = start + (end - start) / 2
+            if(nums[midIndex] == target) return midIndex
+            if(nums[midIndex] < target) start = midIndex else end = midIndex
+        }
 
+        if(nums[start] == target) return start
+        if(nums[end] == target) return end
+        return -1
+    }
+}
 
 =================================================================================================
 Binary Search on ASC and DESC Order
