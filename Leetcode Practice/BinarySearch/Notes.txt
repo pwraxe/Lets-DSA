@@ -30,3 +30,26 @@ fun binSearch(list, target): Int {
         }
         return -1
 }
+
+=================================================================================================
+Binary Search on ASC and DESC Order
+
+Not much difference except > and < Sign in when Condition
+Also Note: while(start <= end)   i.e. '<=' is imp.
+
+In Ascending Order
+==================
+when {
+        nums[midIndex] > target -> end = midIndex - 1
+        nums[midIndex] < target -> start = midIndex + 1
+        nums[midIndex] == target -> return midIndex
+}
+
+In Descending Order
+===================
+when {
+        nums[midIndex] < target -> end = midIndex - 1
+        nums[midIndex] > target -> start = midIndex + 1
+        nums[midIndex] == target -> return midIndex
+}
+
