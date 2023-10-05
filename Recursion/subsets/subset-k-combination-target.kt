@@ -8,6 +8,9 @@ class Solution {
             list.add(subList.toList())
             return
         }
+
+        //this reduce no of recursive call also
+        if(subList.sum() > target) return
         
         //This makes 10 combinations from [1,2]..[4,5]
         subList.add(nums[index])
