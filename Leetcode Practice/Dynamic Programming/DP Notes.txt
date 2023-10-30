@@ -1,0 +1,26 @@
+Greedy Method
+=============
+
+Greedy: If input is feasible then we include input in solution/output
+//OR
+Take only that solution/Input which satisfy given input constrains
+
+
+Dynamic Programming Notes
+=========================
+
+It Explore all possible solution systematically and efficiently.
+It is capable of solving a wide variety of problems which has following characteristics
+	1. Overlapping Subproblems
+	2. Optimal Substructure
+
+Greedy has Optimal Structure, but not overlapping subproblem
+Devide & Conquer break problem into subproblem, but subproblem are not overlapping
+
+DP is Powerful tool becoz it break complex problem in managable subproblem (avoid repeatation sub-calculation)
+DP also helps to improved TimeComplexity
+
+2 Ways to implement DP
+	1. Tabulation: Bottom-Up Approach
+	2. Memorization: Top-Down Apprach
+
