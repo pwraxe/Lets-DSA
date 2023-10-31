@@ -28,7 +28,7 @@ DP also helps to improve TimeComplexity
 	2. Memorization: It is implemented with Recursion starting from the nth case to the base case
 
 Memoizing: Store the result of subProblem(i.e. function) in Array or hashmap etc., 
-re-use result again if the same subProblem occurs 
+re-use result again if the same subproblem occurs 
 
 - Tabulation is faster, Memorization is slower
 - Tabulation does not have headaches where Memorization has
@@ -36,3 +36,22 @@ re-use result again if the same subProblem occurs
 - Memorization does not need subproblem ordering, whereas Tabulation needs logical order
 - Memorization (top-down) uses recursion, and Tabulation (bottom-up) uses iteration.
 
+
+When to Use DP?
+
+1. The first characteristic:
+The problem will ask for the optimum value (maximum minimum or longest) of something, or the number of ways there are to do something.
+
+Ex.
+What is the minimum cost of doing...
+What is the maximum profit from...
+How many ways are there to do...
+What is the longest possible...
+Is it possible to reach a certain point...
+
+Note: Not all DP Problems follow this format, Not all problems are solved by DP
+But this format is very common in DP
+
+2. Second characteristic: 
+	Does the next problem depend on the decision of the current problem (OR)
+	Future Decision depends on an earlier decision
