@@ -1,26 +1,38 @@
 Greedy Method
 =============
 
-Greedy: If input is feasible then we include input in solution/output
+Greedy: If input is feasible then we include input in the solution/output
 //OR
-Take only that solution/Input which satisfy given input constrains
+Take only that solution/Input that satisfies given input constraints
 
 
 Dynamic Programming Notes
 =========================
 
-It Explore all possible solution systematically and efficiently.
-It is capable of solving a wide variety of problems which has following characteristics
+It Explores all possible solutions systematically and efficiently.
+It is capable of solving a wide variety of problems which has the following characteristics
 	1. Overlapping Subproblems
 	2. Optimal Substructure
 
-Greedy has Optimal Structure, but not overlapping subproblem
-Devide & Conquer break problem into subproblem, but subproblem are not overlapping
+Greedy has an Optimal Structure, but no overlapping subproblem
+Divide & Conquer breaks problem into subproblems, but subproblems do not overlap
 
-DP is Powerful tool becoz it break complex problem in managable subproblem (avoid repeatation sub-calculation)
-DP also helps to improved TimeComplexity
+DP is a Powerful tool because it breaks a complex problem into manageable subproblem (avoid repetition sub-calculation)
+DP also helps to improve TimeComplexity
 
-2 Ways to implement DP
+2 Ways to Implement DP
 	1. Tabulation: Bottom-Up Approach
-	2. Memorization: Top-Down Apprach
+	2. Memorization: Top-Down Approach
+
+	1. Tabulation: It is implemented with iteration and starts with the Based case
+	2. Memorization: It is implemented with Recursion starting from the nth case to the base case
+
+Memoizing: Store the result of subProblem(i.e. function) in Array or hashmap etc., 
+re-use result again if the same subProblem occurs 
+
+- Tabulation is faster, Memorization is slower
+- Tabulation does not have headaches where Memorization has
+- Memorization is easy to write, 
+- Memorization does not need subproblem ordering, whereas Tabulation needs logical order
+- Memorization (top-down) uses recursion, and Tabulation (bottom-up) uses iteration.
 
