@@ -55,3 +55,20 @@ But this format is very common in DP
 2. Second characteristic: 
 	Does the next problem depend on the decision of the current problem (OR)
 	Future Decision depends on an earlier decision
+
+Framework for DP Problems
+=========================
+- In a DP problem, a `state` is a set of variables that can sufficiently describe a scenario.
+These variables are called state variables, and we only care about relevant ones.
+
+The Framework
+=============
+
+To Solve DP Problem, we need 3 things
+	1. Data structure which compute/save/store result of every state (i.e. Allocate Memory for saving result of sub-problem)
+	2. Recurrance Relation to transition between states
+	3. Base Case
+
+If the problem had an added constraint such as "you are only allowed to rob up to k houses", then
+k would be another necessary state variable. 
+
