@@ -1,3 +1,21 @@
+//By Tabulation
+//Tabulation
+class Solution {
+    fun minCostClimbingStairs(cost: IntArray): Int {
+        val size = cost.size
+        if(size == 2) return Math.min(cost[0], cost[1])
+        
+        for(index in 2 until cost.size) {
+            cost[index] = cost[index] + Math.min(cost[index-1], cost[index-2])
+        }
+        
+        return Math.min(cost[size-1], cost[size-2])
+    }
+}
+
+//============================
+//By Memorization
+
 class Solution {
     fun minCostClimbingStairs(cost: IntArray): Int {
         val minList = IntArray(cost.size + 1)
