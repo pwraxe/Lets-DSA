@@ -27,6 +27,13 @@ DP also helps to improve TimeComplexity
 	1. Tabulation: It is implemented with iteration and starts with the Based case
 	2. Memorization: It is implemented with Recursion starting from the nth case to the base case
 
+Very IMP when 2 state changes in code
+======================================
+--> When you are using matrix for saving result,
+In Memorization data starts filling from (0,0) index hence Memorization also called Top-Down Approach
+In Tabulation, data starts filling from (size-1, size-1) hence Tabulation also called Bottom-Up Apprach
+
+
 Memoizing: Store the result of subProblem(i.e. function) in Array or hashmap etc., 
 re-use result again if the same subproblem occurs 
 
