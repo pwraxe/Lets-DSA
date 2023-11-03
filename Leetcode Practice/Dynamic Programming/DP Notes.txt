@@ -43,7 +43,6 @@ re-use result again if the same subproblem occurs
 - Memorization does not need subproblem ordering, whereas Tabulation needs logical order
 - Memorization (top-down) uses recursion, and Tabulation (bottom-up) uses iteration.
 
-
 When to Use DP?
 
 1. The first characteristic:
@@ -77,5 +76,9 @@ To Solve DP Problem, we need 3 things
 	3. Base Case
 
 If the problem had an added constraint such as "you are only allowed to rob up to k houses", then
-k would be another necessary state variable. 
+k would be another necessary state variable.
+
+Time and Space Complexity: 
+-> Calculating TC and SC is Not as much as Difficult as it sounds
+-> TC of DP is Directly tied to No of possible states
 
