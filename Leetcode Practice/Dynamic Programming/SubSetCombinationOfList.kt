@@ -3,7 +3,8 @@ fun combinations(nums: IntArray): List<List<Int>> {
 
     //Add empty list
     result.add(emptyList())
-    
+
+    //Method 1 ===================================================
     nums.forEach {num ->
         val currentList: ArrayList<List<Int>> = ArrayList(result)
         currentList.forEach { list ->
@@ -12,6 +13,16 @@ fun combinations(nums: IntArray): List<List<Int>> {
             result.add(combination)
         }
     }
+
+    //Method 2 ===================================================
+    nums.forEach {num ->
+        ArrayList(result).forEach { list ->
+            result.add(ArrayList(list).also { it.add(num) })
+        }
+    }
+
+
+    //Choose from either Method 1   OR  Method 2 Both works same
 
     //remove empty list
     result.removeFirst()
