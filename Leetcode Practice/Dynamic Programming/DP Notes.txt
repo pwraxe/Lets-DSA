@@ -84,3 +84,4 @@ Time and Space Complexity:
 -> Calculating TC and SC is Not as much as Difficult as it sounds
 -> TC of DP is Directly tied to No of possible states
 
+- Make sure Akshay, When you know after getting multiple combination and you have to find min/max/longest then it is kind of DP problem
