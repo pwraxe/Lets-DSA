@@ -1,0 +1,7 @@
+//1. Understand Problem Carefully
+//2. Extract Data from Given Problem
+//3. Get Relevant DS & Writes Psudo code based on previous solved problem
+//4. Consider Edge Cases Min-Medium-Max Value for input
+//5. Write Code on IDE
+
+NOTE: Run Code UNDER 40 MIN 
