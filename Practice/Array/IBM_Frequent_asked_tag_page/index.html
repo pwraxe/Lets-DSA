@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequency Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        table {
+            width: 50%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="textInput">Name:</label>
+        <input type="text" id="textInput">
+    </div>
+    <div>
+        <label for="numberInput">Number:</label>
+        <input type="number" id="numberInput">
+    </div>
+    <div>
+        <button onclick="addRow()">Submit</button>
+    </div>
+    <table id="frequencyTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Frequency</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        
+        function addRow() {
+            var name = document.getElementById("textInput").value;
+            var number = document.getElementById("numberInput").value;
+
+            if (name.trim() === "" || isNaN(number)) {
+                alert("Please enter valid values.");
+                return;
+            }
+
+            var table = document.getElementById("frequencyTable");
+            var tbody = table.getElementsByTagName("tbody")[0];
+            
+            // Check if the name already exists in the table
+            var existingRow = findRowByName(name);
+
+            if (existingRow) {
+                // If the name exists, update the frequency
+                var frequencyCell = existingRow.cells[1];
+                frequencyCell.innerHTML = parseInt(frequencyCell.innerHTML) + parseInt(number);
+            } else {
+                // If the name doesn't exist, add a new row
+                var newRow = tbody.insertRow();
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+
+                cell1.innerHTML = name;
+                cell2.innerHTML = number;
+                cell3.innerHTML = '<button onclick="increaseFrequency(this)">+</button> <button onclick="decreaseFrequency(this)">-</button>';
+            }
+
+            sortTable();
+        }
+        function increaseFrequency(button) {
+            var row = button.parentNode.parentNode;
+            var frequencyCell = row.cells[1];
+            frequencyCell.innerHTML = parseInt(frequencyCell.innerHTML) + 1;
+
+            sortTable();
+        }
+
+        function decreaseFrequency(button) {
+            var row = button.parentNode.parentNode;
+            var frequencyCell = row.cells[1];
+            var currentFrequency = parseInt(frequencyCell.innerHTML);
+
+            if (currentFrequency > 0) {
+                frequencyCell.innerHTML = currentFrequency - 1;
+            }
+
+            sortTable();
+        }
+
+        function findRowByName(name) {
+            var table = document.getElementById("frequencyTable");
+            var tbody = table.getElementsByTagName("tbody")[0];
+            var rows = tbody.getElementsByTagName("tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var rowName = rows[i].cells[0].innerHTML;
+                if (rowName === name) {
+                    return rows[i];
+                }
+            }
+
+            return null;
+        }
+
+        function sortTable() {
+            var table = document.getElementById("frequencyTable");
+            var tbody = table.getElementsByTagName("tbody")[0];
+            var rows = tbody.getElementsByTagName("tr");
+
+            var sortedRows = Array.from(rows).sort((a, b) => {
+                var aFrequency = parseInt(a.cells[1].innerHTML);
+                var bFrequency = parseInt(b.cells[1].innerHTML);
+
+                return bFrequency - aFrequency;
+            });
+
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+
+            sortedRows.forEach(row => {
+                tbody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
