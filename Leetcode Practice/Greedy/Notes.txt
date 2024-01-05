@@ -1,9 +1,15 @@
-- Greedy Choose the Best Option available at moment
+- Greedy Choose the Best Option available at the moment
 - Greedy doesn't worry whether the current best optimal will bring overall optimal result or not
-- Greedy never reverses a result if choice is wrong
+- Greedy never reverses a result if the choice is wrong
 - Greedy always Goes for the local best choice to produce the global best choice
-- Greedy Doesn't always produce optimal solution
+- Greedy Doesn't always produce an optimal solution
 
-We can use Greedy approach to Problem if the problem has the following property
+We can use the Greedy approach to the Problem if the problem has the following property
 1. Greedy Choice Property = If you can choose the best option at a given step without re-considering the previous step
 2. Optimal SubStructure = if the local optimal Solution brings you to the global optimal
+
+Things should know for Greedy
+- Optimization (min or max)
+- Sorting of the input list
+- Greedy Has No Fixed rule (it's ad-hoc based)
+- Usually we don't realised we have applied greedy approach to problem even its not
