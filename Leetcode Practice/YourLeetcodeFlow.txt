@@ -6,7 +6,7 @@
 
 NOTE: Run Code UNDER 40 MIN 
 
-==============================================================================
+=====================================================================================================
 https://www.linkedin.com/pulse/unlocking-leetcode-success-master-problem-solving-maps-lucas-mendes/
 {
 	1. Read and Understand the Problem Statement
@@ -20,4 +20,24 @@ https://www.linkedin.com/pulse/unlocking-leetcode-success-master-problem-solving
 	3. Check for Repeating Subproblems
 	4. Consider Complexity and Efficiency
 	5. Explore Examples and Test Cases 
+}
+
+=====================================================================================================
+Build the Solution
+
+For Map {
+	- Initialised empty Map, Populate Data
+	- Use a map for data lookup or fast searching of data
+}
+
+For DP {
+	- Identify a small subproblem and write a recursive funtion for that
+	- Create Memory (Array or table) for saving results by recursive function (either Top-Down or Bottom-Up)
+	- Use Loop to fill the memorization table
+}
+
+For Greedy {
+	- Identify, can take Locally Best Choice? 
+	- Write code to select locally best choice
+	- Ensure your local optimal choice leads to the global optimal choice
 }
