@@ -9,6 +9,25 @@ fun main() {
     }
 }
 //=============================================
+class Solution {
+    private val rows = 10
+    fun pattern(row:Int, col:Int, char: Char = 'A') {
+        if (row == rows) return
+        if (col <= row) {
+            print("$char ")
+            pattern(row, col+1, char+1)
+        } else {
+            println()
+            pattern(row+1, 0, char)
+        }
+    }
+}
+fun main() {
+    Solution().apply {
+        pattern(0,0)
+    }
+}
+
 
 
 /*******************
