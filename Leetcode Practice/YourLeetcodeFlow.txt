@@ -1,7 +1,23 @@
 //1. Understand Problem Carefully
-//2. Extract Data from Given Problem
-//3. Get Relevant DS & Writes Psudo code based on previous solved problem
+//2. Extract Data from the Given Problem
+//3. Get Relevant DS & Writes Pseudo code based on previously solved problem
 //4. Consider Edge Cases Min-Medium-Max Value for input
 //5. Write Code on IDE
 
 NOTE: Run Code UNDER 40 MIN 
+
+==============================================================================
+https://www.linkedin.com/pulse/unlocking-leetcode-success-master-problem-solving-maps-lucas-mendes/
+{
+	1. Read and Understand the Problem Statement
+	2. Identify Problem Characteristics
+		A. Search or Lookup Requirements (Use Hashtable for search, especially unsorted list)
+		B. Optimization or Counting (Greedy Here)
+		C. Recursive Structure (DP here)
+		D. Sequencing or Ordering (DP or Greedy Here)
+		E. Graph Or Network (~Greedy)
+	
+	3. Check for Repeating Subproblems
+	4. Consider Complexity and Efficiency
+	5. Explore Examples and Test Cases 
+}
