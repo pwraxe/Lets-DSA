@@ -1,6 +1,6 @@
 class Solution {
   
-    fun mergeSortWay1(n: IntArray): IntArray {
+    fun insetionSortWay1(n: IntArray): IntArray {
          for (i in 1 ..< n.size) {
              val key = n[i]
              var j = i-1
@@ -13,7 +13,7 @@ class Solution {
          return n
      }
     
-    fun mergeSortWay2(n: IntArray): IntArray {
+    fun insetionSortWay2(n: IntArray): IntArray {
 
         for (i in 1 until n.size) {
             val picked = n[i]
@@ -29,8 +29,9 @@ class Solution {
 }
 fun main() {
     Solution().apply {
-        val list = intArrayOf(12, 31, 25, 8, 32, 17)
-//        val list = intArrayOf(5,4,1,3,2,5,4,1,2,3)
-        println(mergeSortWay2(list).toTypedArray().contentToString())
+        //val list = intArrayOf(12, 31, 25, 8, 32, 17)
+        //println(insetionSortWay1(list).toTypedArray().contentToString())
+        val list = intArrayOf(5,4,1,3,2,5,4,1,2,3)
+        println(insetionSortWay2(list).toTypedArray().contentToString())
     }
 }
