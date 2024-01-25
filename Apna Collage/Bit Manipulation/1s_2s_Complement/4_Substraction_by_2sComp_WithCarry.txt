@@ -1,0 +1,34 @@
+Steps {
+  - Find 2's Complement of Negative No
+  - Add that 2's Complement to other positive no
+  - if carry got then just remove / ignore that
+}
+
+Subtract No using 2's Complement in-case without carry
+Ex 45 - 15
+
+Step 1: Treat -15 as 15 and Find a Binary of 15
+      Binary of 15  =  0 0 0 0 1 1 1 1 
+
+Step 2: Take 1's Complement of Binary of 15
+        (1's Complement = flip all 0's to 1's and vice-versa)
+        1's Comp = 1 1 1 1 0 0 0 0
+
+Step 3: Add 1 to 1's complement of 15
+
+1's Complement of 15   = 1 1 1 1 0 0 0 0
+add 1 to above                         1
+                      ____________________
+                         1 1 1 1 0 0 0 1      ===> Resultant 2's Complement
+
+Step 4: Add Binary of 45 and 2's Complement of -15 
+45                      0 0 1 0 1 1 0 1
+2's Complement of -15   1 1 1 1 0 0 0 1
+                      ____________________
+Final Result        1 | 0 0 0 1 1 1 1 0
+
+As you can see we got extra Carry, JUST IGNORE/REMOVE/DROP it
+Final Result = 0 0 0 1 1 1 1 0   ===> 30 is Equvalant Decimal No
+
+Normally 45 - 15 = 30
+
