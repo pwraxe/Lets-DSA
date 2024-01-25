@@ -1,0 +1,35 @@
+Steps {
+  - Take 2's Complement of Negative No
+  - Add 2's Complement to other positive no
+  - if we get 1 as extra carry then add that 1 to result
+}
+
+
+Lets Substract 45 - 15
+Here Negative No is -15 
+We have to find 2's Complement of -15
+
+Step 1: Treat -15 as 15 get Binary of 15
+        15 = 0 0 0 0 1 1 1 1 
+
+Step 2: Take 1's Complement of Binary of 15
+        (1's Complement = flip all 0's to 1's and vice-versa)
+        1's Comp = 1 1 1 1 0 0 0 0
+
+Step 3: Add this 1's Complement of 15 to Binary of 45
+
+45          =  0 0 1 0 1 1 0 1 
+1's of -15  =  1 1 1 1 0 0 0 0 
+              __________________
+           (1) 0 0 0 1 1 1 0 1
+
+As you can see in addition Result give 1 extra carry Hence add that carry to Result
+Result     0 0 0 1 1 1 0 1 
+carry                    1
+          ____________________
+           0 0 0 1 1 1 1 0   =======> Decimal ==> 30
+
+
+Normally 45 - 15 = 30
+           
+
