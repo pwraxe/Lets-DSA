@@ -1,0 +1,33 @@
+Steps {
+  - Take 1's Complement of Negative no
+  - Add 1's Complement to anather No
+  - if you get extra carry then again find 1's Complement of Result ekse Add extra carry to result 
+}
+
+
+Lets Substract 15 - 45
+Here Negative No is -45
+We have to find 2's Complement of -45
+
+Step 1: Treat -45 as 45 get Binary of 45
+        45 = 0 0 1 0 1 1 0 1 
+
+Step 2: Take 1's Complement of Binary of 45
+        (1's Complement = flip all 0's to 1's and vice-versa)
+        1's Comp = 1 1 0 1 0 0 1 0
+
+Step 3: Add this 1's Complement of -45 to Binary of 15
+
+15            0 0 0 0 1 1 1 1
+1's Comp -45  1 1 0 1 0 0 1 0 
+              __________________
+result        1 1 1 0 0 0 0 1
+
+As you can see we dont get extra carry, such case take 1;s complement of result
+1's Complement (Refer step 2)
+(1) 0 0 1 1 1 1 0
+MSB (Most Significant Bit is 1) treating it as Negative Hence Final Result will be
+1 | 0 0 1 1 1 1 0  ==> toDecimal ==> -30
+
+Normally 15 - 45 = -30
+           
