@@ -24,3 +24,7 @@ fun main() {
         println(stringCompress("abcd"))
     }
 }
+
+
+// a4b2c3d2
+// abcd
