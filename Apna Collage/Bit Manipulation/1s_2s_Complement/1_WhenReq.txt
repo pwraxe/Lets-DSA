@@ -1,0 +1,20 @@
+When you have negative no
+You have to add that negative no into positive then you need complement of a no.
+
+Ex.
+
+-15  == Lets find 2's Complement of a no
+Step 1: Consider -15 as positive and find Binary of 15
+      15 = 0 0 0 0 1 1 1 1
+
+Step 2: Take 1's Complement of 15
+      Flip all bits (change all 1 to 0 and 0 to 1)
+      1's Comlement  =  1 1 1 1 0 0 0 0
+
+Step 3: Add 1 to 1's Complement of 15
+      1's Complement of 15 = 1 1 1 1 0 0 0 0 
+      add 1                =               1
+                          _____________________
+      Resultant 2's Comp   = 1 1 1 1 0 0 0 1
+
+Step 4: Finally add this 2's Complement of Negative No to any positive no
