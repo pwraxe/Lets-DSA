@@ -1,7 +1,7 @@
 Steps {
-  - Take 2's Complement of Negative No
-  - Add 2's Complement to other positive no
-  - if we get 1 as extra carry then add that 1 to result
+  - Take 1's Complement of Negative no
+  - Add 1's Complement to anather No
+  - if you get extra carry then again find 1's Complement of Result ekse Add extra carry to result 
 }
 
 
