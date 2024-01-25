@@ -1,0 +1,37 @@
+Steps {
+  - Find 2's Complement of Negative No
+  - Add that 2's Complement to other positive no
+  - if carry got then just remove / ignore that
+}
+
+Subtract No using 2's Complement in-case without carry
+Ex 15 - 45
+
+Step 1: Treat -45 as 45 and Find a Binary of 45
+      Binary of 45  =  0 0 1 0 1 1 0 1
+
+Step 2: Take 1's Complement of Binary of 45
+        (1's Complement = flip all 0's to 1's and vice-versa)
+        1's Comp = 1 1 0 1 0 0 1 0
+
+Step 3: Add 1 to 1's complement of 45
+
+1's Complement of 15   = 1 1 0 1 0 0 1 0
+add 1 to above                         1
+                      ____________________
+                         1 1 0 1 0 0 1 1   ===> Resultant 2's Complement
+
+Step 4: Add Binary of 15 and 2's Complement of -45 
+15                      0 0 0 0 1 1 1 1
+2's Complement of -15   1 1 0 1 0 0 1 1
+                      ____________________
+ Result                 1 1 1 0 0 0 1 0
+
+Note: In Result we got MSB (Most Significant Bit) 8th Bit is 1 which indicate negative no, Hence we keep it as it is 
+As you can see we dont have extra Carry, Hence Find 2's Complement of Result
+Lets Find 2's Complemt of Result
+1's Complement  = 1 0 0 1 1 1 0 1 
+add 1 to above                  1
+                ____________________
+Final Result      1 | 0 0 1 1 1 1 0   ==> -30
+Normally 15 - 45 = -30
