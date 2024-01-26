@@ -1,0 +1,61 @@
+When you have negative no
+You have to add that negative no into positive then you need complement of a no.
+
+Ex.
+
+-15  == Lets find 2's Complement of a no
+Step 1: Consider -15 as positive and find Binary of 15
+      15 = 0 0 0 0 1 1 1 1
+
+Step 2: Take 1's Complement of 15
+      Flip all bits (change all 1 to 0 and 0 to 1)
+      1's Comlement  =  1 1 1 1 0 0 0 0
+
+Step 3: Add 1 to 1's Complement of 15
+      1's Complement of 15 = 1 1 1 1 0 0 0 0 
+      add 1                =               1
+                          _____________________
+      Resultant 2's Comp   = 1 1 1 1 0 0 0 1
+
+Step 4: Finally add this 2's Complement of Negative No to any positive no
+
+
+
+//========================================================================================
+inversion of any positive number always 'Negative of (that number+1)'
+Ex. 
+5.inv() = -6  ,,  15.inv() = -16  ,,  78.inv() = -79
+
+//========================================================================================
+Inversion of Any Negative No is positive less than that no
+Ex. -10.inv() = 9  ,,  -8.inv() = 7  ,,  -110.inv() = 109
+
+Note ------ NOTE --------
+1. You are given a Positive No and you have to find Inversion (|| 1's Complement) 
+Then flip all bits (flip all 1's to 0 and 0 to 1)
+Then No will become negative as MSB also become 1 
+Hence we have to find 2's Complement of that No i.e. we have to convert that Negative No into positive 
+Ex.1 For -82  (Taking -ve Num)
+Bin of -82  ==  1| 1 0 1 0 0 1 0
+Take 1's Comp = 0| 0 1 0 1 1 0 1  ==> 45
+As 45 is Positive No Hence We Done
+
+Ex.2 For 82 (Taking +ve No)
+Bin of 82   ==  0| 1 0 1 0 0 1 0  
+Take 1's Comp   1| 0 1 0 1 1 0 1   ==> -45
+As We Got Negative No after 1's Complement hence 
+Find 2's Complement of -45 to Convert that no into positive no
+
+Bin of -45  ==  1| 0 1 0 1 1 0 1
+
+1's Comp        1| 1 0 1 0 0 1 0
++1 for 2's Comp                1
+_______________________________________
+                1| 1 0 1 0 0 1 1       <==== -83
+
+
+
+
+
+
+
