@@ -53,6 +53,46 @@ Bin of -45  ==  1| 0 1 0 1 1 0 1
 _______________________________________
                 1| 1 0 1 0 0 1 1       <==== -83
 
+===========================================================================================================================
+Note Very Very Very Very Important
+
+
+~(-45) and -(~45)
+
+Example: ~(-45)
+
+	-> Note: To show a negative number in binary in bitwise, convert that number in 2's Complement first
+	-> ~(2's Complement of -45)
+	-> then negation of it
+
+	-45 	1| 0 1 0 1 1 0 1
+
+	Convert the above bits to 2's Complement
+	1's Complement 	===>    0| 1 0 1 0 0 1 0
+	add 1 to above						   1
+					 	  ___________________
+	2's Complement of -45   0| 1 0 1 0 0 1 1
+
+	Convert Negation of above bits
+	~(2's Complement) = ~(0| 1 0 1 0 0 1 1) = 0| 0 1 0 1 1 0 0
+	0| 0 1 0 1 1 0 0  = MSB is 0 i.e. Positive Num
+	Its Decimal = 44
+
+
+Example: -(~45)
+	
+	-> Take ~ of 45
+	45					0| 0 1 0 1 1 0 1
+	1's Complement		1| 1 0 1 0 0 1 0
+	
+	It's Negative No, Convert any Negative Number to 2's Complement
+	1's Complement 		1| 0 1 0 1 1 0 1
+	add 1 							   1
+					_________________________
+						1| 0 1 0 1 1 1 0      <=== Its Decimal == -46
+
+	In Math -(-46) = 46
+
 
 
 
