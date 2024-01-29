@@ -1,1 +1,2 @@
 Set Vs HashSet, Does hashset have index in memory? why hashSet starts with 0th index?
+In java, 44 shl 4, giving ans 704 insted 192 when inputs are bytes?? How??
