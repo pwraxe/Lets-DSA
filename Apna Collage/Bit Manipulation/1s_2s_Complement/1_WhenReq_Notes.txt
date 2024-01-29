@@ -93,6 +93,17 @@ Example: -(~45)
 
 	In Math -(-46) = 46
 
+===========================================================================================================================
+
+Check Number even or not 2 Way
+Normally 
+val n = 45
+ if(n % 2 == 0) { /*EVEN*/ }
+
+In Bit Manipulation
+val n = 45
+if (n and 1 == 0) { /*EVEN*/ }
+ 
 
 
 
