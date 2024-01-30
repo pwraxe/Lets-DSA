@@ -36,6 +36,13 @@ class Bits {
             setBitAt(index)
         }
     }
+
+    //update given bit at given index way 2
+    fun Int.updateBitAtWay2(index: Int, bit: Int): Int {
+        val n = clearBitAt(index)
+        val mask = bit shl index
+        return n or mask
+    }
 }
 
 fun main() {
@@ -68,8 +75,13 @@ fun main() {
         println("After Update 0 index 5: ${num.updateBitAt(2,0).toString(2)}")
         println("After Update 1 index 5: ${num.updateBitAt(3,1).toString(2)}")
 
+        println("5 ===========================")
+        println("Before Update  index 6: ${num.toString(2)}")
+        println("After Update 0 index 6: ${num.updateBitAt(6,0).toString(2)}")
+        println("After Update 1 index 4: ${num.updateBitAt(4,1).toString(2)}")
     }
 }
+
 
 
 
@@ -96,3 +108,7 @@ ReverseFlipped: 1110111
 Before Update  index 5: 1110111
 After Update 0 index 5: 1110011
 After Update 1 index 5: 1111111
+5 ===========================
+Before Update  index 6: 1110111
+After Update 0 index 6: 110111
+After Update 1 index 4: 1110111
