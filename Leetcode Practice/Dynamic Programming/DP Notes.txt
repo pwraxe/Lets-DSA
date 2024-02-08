@@ -56,6 +56,7 @@ What is the longest possible...
 Is it possible to reach a certain point...
 //During Learning
 find k nums, get min k, max k, k seq etc. (k is dynamic num to calculate)
+Least No of OR Most No of something
 
 Note: Not all DP Problems follow this format, Not all problems are solved by DP
 But this format is very common in DP
