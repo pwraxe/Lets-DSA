@@ -1,0 +1,15 @@
+Following are some tips or things to solving DP problem
+
+- Check for Overlapping Subproblem
+- Check for dependency on a previous decision
+- Data Structure for State Variable
+- Create function, what it takes, what it returns
+- What is a small version of the problem (its defined base case)
+- Try first Recursion then add Memorization to it then Tabulation
+
+- Draw a Recurrence Relation Tree and Create/Find out the Recurrence relation or internal flow
+- Recurrence relation based on selection, dependency, exact match/notMatch to output, 
+
+- Think about taking or not taking the concept
+- if string or array is input then index is default single default state variable
+- Check if you are removing something from input, taking max or min from input at each time
