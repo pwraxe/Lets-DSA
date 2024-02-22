@@ -74,15 +74,34 @@ The Framework
 =============
 
 To Solve DP Problem, we need 3 things
-	1. Data structure which compute/save/store result of every state (i.e. Allocate Memory for saving result of sub-problem)
-	2. Recurrance Relation to transition between states
+	1. Data structure which computes/saves/stores the result of every state (i.e. Allocate Memory for saving the result of sub-problem)
+	2. Recurrence Relation to transition between states
 	3. Base Case
 
 If the problem had an added constraint such as "you are only allowed to rob up to k houses", then
 k would be another necessary state variable.
 
 Time and Space Complexity: 
--> Calculating TC and SC is Not as much as Difficult as it sounds
--> TC of DP is Directly tied to No of possible states
+-> Calculating TC and SC is not as difficult as it sounds
+-> TC of DP is Directly tied to The possible states
 
-- Make sure Akshay, When you know after getting multiple combination and you have to find min/max/longest then it is kind of DP problem
+- Make sure Akshay, When you know after getting multiple combinations and you have to find min/max/longest then it is kind of a DP problem
+===============================================================
+
+- With DP we can use logical thinking to find the answer of the original problem
+- The dimension of DP is dependent on the total variable used to define each state
+- Typically more dimension = more difficult (2D is Common)
+
+1D - If the input is string or array then its needs only 1 state variable and that is 'index' (which is the default)
+2D 
+- If the input has string/array and also other input ex. 'k' then 'k' will be another state variable --> dp(i,k)
+- If extra constrain is given in input then that constrain is another state variable (Values that describes a state in a given state)
+- If any list or variable in input which to never get changed that list or variable has no input
+Ex. in wordlist ["a"," ab", "ABC"] <-- we can use any word at n times then we cannot track word by variable 
+If word change/each state needs different word then we need to track that work, The tracking variable is another state variable for the DP
+
+- NOTE: Check, does input is forming by output || output is forming by input
+
+
+
+
