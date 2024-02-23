@@ -14,3 +14,6 @@ Following are some tips or things to solving DP problem
 - if string or array is input then index is default single default state variable
 - Check if you are removing something from input, taking max or min from input at each time
 - Check, if does input is forming by output or output is forming by input
+- Create the state variable (Data Structure/ Memoizing) based on the return type of function
+   Ex. fun isWork(..): Boolean --> create BooleanArray
+       fun getMin(...): Int --> Cerate IntArray etc. etc.
