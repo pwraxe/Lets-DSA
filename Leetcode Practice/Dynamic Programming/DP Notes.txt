@@ -88,20 +88,21 @@ Time and Space Complexity:
 - Make sure Akshay, When you know after getting multiple combinations and you have to find min/max/longest then it is kind of a DP problem
 ===============================================================
 
-- With DP we can use logical thinking to find the answer of the original problem
+- With DP we can use logical thinking to find the answer to the original problem
 - The dimension of DP is dependent on the total variable used to define each state
 - Typically more dimension = more difficult (2D is Common)
 
-1D - If the input is string or array then its needs only 1 state variable and that is 'index' (which is the default)
+1D - If the input is string or array then it needs only 1 state variable and that is 'index' (which is the default)
 2D 
 - If the input has string/array and also other input ex. 'k' then 'k' will be another state variable --> dp(i,k)
-- If extra constrain is given in input then that constrain is another state variable (Values that describes a state in a given state)
-- If any list or variable in input which to never get changed that list or variable has no input
+- If extra constrain is given in input then that constrain is another state variable (Values that describe a state in a given state)
+- If any list or variable in input never get changed that list or variable has no input
 Ex. in wordlist ["a"," ab", "ABC"] <-- we can use any word at n times then we cannot track word by variable 
-If word change/each state needs different word then we need to track that work, The tracking variable is another state variable for the DP
+If word change/each state needs a different word then we need to track that work, The tracking variable is another state variable for the DP
 
 - NOTE: Check, does input is forming by output || output is forming by input
 
-
+==================================================================================
+In DP Problem, "doing nothing" is refer to two state variable having the same value
 
 
