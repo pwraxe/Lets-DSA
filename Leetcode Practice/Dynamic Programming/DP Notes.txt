@@ -103,6 +103,13 @@ If word change/each state needs a different word then we need to track that work
 - NOTE: Check, does input is forming by output || output is forming by input
 
 ==================================================================================
-In DP Problem, "doing nothing" is refer to two state variable having the same value
+In DP Problem, "doing nothing" refers to two state variables having the same value
+
+==================================================================================
+Very Very Very .. Kuch Jyada hi Very Important
+- When to use Memorization?
+  Check for input constraints, if the array size is below 10^4, then use Memorization
+  Why? Because in kotlin, stack sizes range from 9000 - 10000 (variable), 
+  When recursion happens in your code the call stack starts filling till the base case goes beyond then gives StackOverflowException even code is correct
 
 
