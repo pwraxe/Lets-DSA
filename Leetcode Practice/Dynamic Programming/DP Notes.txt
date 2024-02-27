@@ -112,4 +112,4 @@ Very Very Very .. Kuch Jyada hi Very Important
   Why? Because in kotlin, stack sizes range from 9000 - 10000 (variable), 
   When recursion happens in your code the call stack starts filling till the base case goes beyond then gives StackOverflowException even code is correct
 
-
+- When you have n(let's say 3) state variables, when you auto calculate any one of n variables (let's say 3rd one among 3 variables), then you reduce 1 variable from state variables and it also reduces Time and Space Complexity of an algorithm
