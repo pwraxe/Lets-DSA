@@ -103,7 +103,7 @@ If word change/each state needs a different word then we need to track that work
 - NOTE: Check, does input is forming by output || output is forming by input
 
 ==================================================================================
-In DP Problem, "doing nothing" refers to two state variables having the same value
+In the DP Problem, "doing nothing" refers to two state variables having the same value
 
 ==================================================================================
 Very Very Very .. Kuch Jyada hi Very Important
@@ -113,3 +113,15 @@ Very Very Very .. Kuch Jyada hi Very Important
   When recursion happens in your code the call stack starts filling till the base case goes beyond then gives StackOverflowException even code is correct
 
 - When you have n(let's say 3) state variables, when you auto calculate any one of n variables (let's say 3rd one among 3 variables), then you reduce 1 variable from state variables and it also reduces Time and Space Complexity of an algorithm
+
+==================================================================================
+DP Patterns 
+	-> 1D Pattern
+	-> 2D Pattern (multiple rows, multiple cols)
+	-> Dynamic Recurrence Relation Equation
+	-> Doing Nothing Pattern (Rare)
+	-> State Reduction Pattern
+	-> Counting DP Pattern
+	-> Kadane's Algorithm Pattern
+	-> Pathing Problem Pattern 
+
