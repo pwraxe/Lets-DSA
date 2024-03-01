@@ -55,7 +55,7 @@ How many ways are there to do...
 What is the longest possible...
 Is it possible to reach a certain point...
 //During Learning
-find k nums, get min k, max k, k seq etc. (k is dynamic num to calculate)
+find k nums, get min k, max k, k seq, etc. (k is dynamic num to calculate)
 Least No of OR Most No of something
 
 Note: Not all DP Problems follow this format, Not all problems are solved by DP
@@ -68,12 +68,12 @@ But this format is very common in DP
 Framework for DP Problems
 =========================
 - In a DP problem, a `state` is a set of variables that can sufficiently describe a scenario.
-These variables are called state variables, and we only care about relevant ones.
+These are called state variables, and we only care about relevant ones.
 
 The Framework
 =============
 
-To Solve DP Problem, we need 3 things
+To Solve the DP Problem, we need 3 things
 	1. Data structure which computes/saves/stores the result of every state (i.e. Allocate Memory for saving the result of sub-problem)
 	2. Recurrence Relation to transition between states
 	3. Base Case
@@ -96,7 +96,7 @@ Time and Space Complexity:
 2D 
 - If the input has string/array and also other input ex. 'k' then 'k' will be another state variable --> dp(i,k)
 - If extra constrain is given in input then that constrain is another state variable (Values that describe a state in a given state)
-- If any list or variable in input never get changed that list or variable has no input
+- If any list or variable in input never gets changed that list or variable has no input
 Ex. in wordlist ["a"," ab", "ABC"] <-- we can use any word at n times then we cannot track word by variable 
 If word change/each state needs a different word then we need to track that work, The tracking variable is another state variable for the DP
 
@@ -125,3 +125,5 @@ DP Patterns
 	-> Kadane's Algorithm Pattern
 	-> Pathing Problem Pattern 
 
+Note, IMP, Tip
+- If 2 Array/String is given in input, and you do not know how to proceed next in the else block then feel free to go with tabulation (Nested For loop)
