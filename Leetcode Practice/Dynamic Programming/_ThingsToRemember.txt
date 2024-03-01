@@ -19,3 +19,4 @@ Following are some tips or things to solving DP problem
        fun getMin(...): Int --> Cerate IntArray etc. etc.
 - IMP: Check constraints first, if size or elements are under 10^4 then recursion will work else use tabulation for the longer size of the array
 - When you get it, we need three state variables, then try to calculate the third variable so that your memoizing will be 2D
+- If 2 Array/String is given in input, and you do not know how to proceed next in the else block then feel free to go with tabulation (Nested For loop)
