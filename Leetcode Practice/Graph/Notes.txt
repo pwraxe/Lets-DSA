@@ -1,27 +1,27 @@
 Vertex: {
-	- Vertex is Node of Graph
+	- Vertex is the Node of Graph
 	- Multiple nodes are also called Vertices
-	- Its has Edgec connected to other vertex
+	- It has an Edge connected to another vertex
 }
-Edge : {
+Edge: {
 	- Connected Line between two Nodes
-	- In some case edges has weight and direction
+	- In some cases, edges have weight and direction
 }
 Path: {
-	- Sequece of Vertices to go through from one vertex to other vertex
-	- Collection of multiple direct connected Vertex, from one Vertex to other Vertex 
-    - Note, there can be multiple path from one vertex to other
+	- Sequence of Vertices to go through from one vertex to another vertex
+	- Collection of multiple directly connected Vertex, from one Vertex to another Vertex 
+    - Note, that there can be multiple paths from one vertex to another
 }
 Path Length: {
 	- Total edges connected between path 
-	- The Number of edges in path
+	- The Number of edges in the path
 }
 Cycle: {
-	- Starting of Path and Ending of Path  are on same Vertex(Node)
-	- Path where starting point and ending point on same vertex
+	- The starting of Path and Ending of the Path  are on the same Vertex(Node)
+	- Path where starting point and ending point on the same vertex
 }
 Negative Weight Cycle: {
-	- Sum of all weight of Edges in Graph Cycle is nagative then it is Nagative Weight Cycle
+	- The sum of all weight of Edges in the Graph Cycle is negative then it is a Negative Weight Cycle
 }
 
 Connectivity: {
@@ -30,33 +30,50 @@ Connectivity: {
 }
 Degree of Vertex: {
 	- Total edges connected to that vertex
-	- This applied to unweighted and undirected graph
+	- This applied to an unweighted and undirected graph
 }
 In-Degree Vertex: {
-	- This applied to directed graph
-	- Total directed edges  coming towords that vertex
+	- This is applied to a directed graph
+	- Total directed edges  coming towards that vertex
 	- Edges coming to this destination (destination is current vertex)
 }
 Out-Degree: {
-	- This applied to directed graph
+	- This is applied to a directed graph
 	- Total directed edges going far from that vertex
-	- Edges starts from this source (source is currect vertex)
+	- Edges start from this source (source is current vertex)
 }
 
-There are many types of graph, we will see 3 types 
+There are many types of graphs, we will see 3 types 
 1. Directed Graph {
 	- Edges between any two nodes are with direction or arrow
-	- This direction is one-way direction
-	- This also indicate one way relationship
-	- Edges having one way direction
+	- This direction is a one-way direction
+	- This also indicates the one-way relationship
+	- Edges having one-way direction
 }
 2. Undirected Graph {
 	- Edges between any two nodes are without direction or arrow
-	- This also indicate two way relationship
-	- Edges having two way direction
+	- This also indicates the two-way relationship
+	- Edges having two-way direction
 }
 3. Weighted Graph {
-	- Edges in graph has some values to it
+	- Edges in the graph have some values to them
 	- Weight can be anything such as time, distance, size
 }
+Disjoint Set: {
+	- When you want to check whether two vertices are connected or not quickly then use a disjoint set data structure
+	- This Data Structure also known as Union-Find Data Structure
+	- Primary Use of this is to identify whether two vertices are connected or not in the network (computer n/w or social n/w) 
+	- It has two functions, 
+		1) find(): Finds Root node of given vertex, 
+		2) union(): unions two vertices and makes their root node the same
+}
+Terminology: {
+	- Parent Node: Direct Parent Node of Vertex 
+	- Root Node: Node without Parent Node, or node itself a Parent Node, it also called as Head Node
+}
+
+Implementation of disjoin set: {
+	- Impl with Quick Find: In this TC of find() is O(1), and TC of union() is O(n)
+	- Impl with Quick Union: TC is better than find(), 
+} 
 
