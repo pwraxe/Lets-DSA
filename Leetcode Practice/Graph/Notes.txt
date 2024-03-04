@@ -1,0 +1,62 @@
+Vertex: {
+	- Vertex is Node of Graph
+	- Multiple nodes are also called Vertices
+	- Its has Edgec connected to other vertex
+}
+Edge : {
+	- Connected Line between two Nodes
+	- In some case edges has weight and direction
+}
+Path: {
+	- Sequece of Vertices to go through from one vertex to other vertex
+	- Collection of multiple direct connected Vertex, from one Vertex to other Vertex 
+    - Note, there can be multiple path from one vertex to other
+}
+Path Length: {
+	- Total edges connected between path 
+	- The Number of edges in path
+}
+Cycle: {
+	- Starting of Path and Ending of Path  are on same Vertex(Node)
+	- Path where starting point and ending point on same vertex
+}
+Negative Weight Cycle: {
+	- Sum of all weight of Edges in Graph Cycle is nagative then it is Nagative Weight Cycle
+}
+
+Connectivity: {
+	- If there exists at least one path between two vertices, these two vertices are connected
+	- If Graph has at least 1 path which is connected to two Vertex
+}
+Degree of Vertex: {
+	- Total edges connected to that vertex
+	- This applied to unweighted and undirected graph
+}
+In-Degree Vertex: {
+	- This applied to directed graph
+	- Total directed edges  coming towords that vertex
+	- Edges coming to this destination (destination is current vertex)
+}
+Out-Degree: {
+	- This applied to directed graph
+	- Total directed edges going far from that vertex
+	- Edges starts from this source (source is currect vertex)
+}
+
+There are many types of graph, we will see 3 types 
+1. Directed Graph {
+	- Edges between any two nodes are with direction or arrow
+	- This direction is one-way direction
+	- This also indicate one way relationship
+	- Edges having one way direction
+}
+2. Undirected Graph {
+	- Edges between any two nodes are without direction or arrow
+	- This also indicate two way relationship
+	- Edges having two way direction
+}
+3. Weighted Graph {
+	- Edges in graph has some values to it
+	- Weight can be anything such as time, distance, size
+}
+
