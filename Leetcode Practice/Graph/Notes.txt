@@ -77,6 +77,13 @@ Implementation of disjoin set: {
 	- Impl with Quick Union: TC is better than find(), 
 } 
 
+- Think of PriorityQueue when problems want to result in Lexicographical Order
 =============================================================================================================
-
-- Think of PriorityQueue when problems want result in Lexicographical Order
+DFS is Ideal when {
+	- To find all vertices
+	- To find all paths from two vertices
+}
+DFS explores all paths from the start vertex to all other vertices 
+DFS Use for
+	1. Traverse all vertices
+	2. Traverse all paths between any two vertices
