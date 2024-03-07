@@ -77,3 +77,6 @@ Implementation of disjoin set: {
 	- Impl with Quick Union: TC is better than find(), 
 } 
 
+=============================================================================================================
+
+- Think of PriorityQueue when problems want result in Lexicographical Order
