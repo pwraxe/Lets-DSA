@@ -78,3 +78,12 @@ fun main() {
         bfs('A')
     }
 }
+
+//Output
+[A] -> [B, C]
+[B] -> [A, C, D, E]
+[C] -> [A, B, D]
+[D] -> [C, B, E]
+[E] -> [B, D]
+DFS: [A, C, D, E, B]
+BFS: [A, B, C, D, E]
