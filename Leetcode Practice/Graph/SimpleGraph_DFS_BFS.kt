@@ -1,7 +1,18 @@
+/*
+* - Creation of Graph using Adjacency List
+* - Traverse using DFS
+* - Traverse using BFS
+*/
+
+//I can say, this is a strict graph, 
+//Strict mean, I have allowed the creation node/vertex between 0 to n+1, which causes limitations, in the graph,
+//This is why we consider vertex data as an index for the `graph` array.
+
+
 import java.util.ArrayDeque
 import java.util.Stack
 
-class Graph (n:Int) {
+class Graph (n: Int) {
 
     private val graph = Array(n+1) { mutableSetOf<Int>() }
 
