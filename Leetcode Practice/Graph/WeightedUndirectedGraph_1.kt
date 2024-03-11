@@ -1,5 +1,5 @@
 data class Edge(val src: Int, val dest: Int, val weight: Int)
-class Graph (n:Int) {
+class Graph (n: Int) {
 
     private val graph = Array(n+1) { mutableSetOf<Edge>() }
 
