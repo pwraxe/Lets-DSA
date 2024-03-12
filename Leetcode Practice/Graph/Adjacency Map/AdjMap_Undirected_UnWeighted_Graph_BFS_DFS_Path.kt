@@ -1,3 +1,5 @@
+import java.util.*
+
 //Adjacency Map, UnDirected UnWeighted Graph
 class Graph {
 
@@ -70,7 +72,18 @@ class Graph {
 
     private val allPaths = mutableListOf<String>()
     fun getAllPathsFromSrcToDest(src: Int, dest: Int, path:String, visited:BooleanArray) {
-        //You have solved this using recursion
+        if (src == dest) {
+            allPaths.add(path)
+            return
+        }
+
+        graph[src]?.forEach {
+            if (!visited[it]) {
+                visited[src] = true
+                getAllPathsFromSrcToDest(it,dest, "$path -> $it", visited)
+                visited[src] = false
+            }
+        }
     }
 
     fun readAllPaths() {
@@ -126,4 +139,7 @@ Visited: [true, false, true, false, true, true, false]
 Path: 0 -> 2 -> 4 -> 5
 
 All Paths are
- //You have solved this using recursion
+0 -> 1 -> 3 -> 4 -> 5
+0 -> 1 -> 3 -> 5
+0 -> 2 -> 4 -> 3 -> 5
+0 -> 2 -> 4 -> 5
