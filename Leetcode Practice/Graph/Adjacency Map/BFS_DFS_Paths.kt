@@ -1,5 +1,6 @@
 import java.util.ArrayDeque
 import java.util.Queue
+import java.util.Stack
 
 //Build Graph, BFS Traverse
 class Graph {
@@ -92,6 +93,75 @@ class Graph {
         bfs_allPaths_Recursion(dest, visited, queue)
     }
 
+    //=========================================================================================================
+
+    fun dfs_byIteration(src: Char) {
+        val stack = Stack<Char>()
+        val visited = mutableSetOf<Char>()
+        stack.push(src)
+
+        while (stack.isNotEmpty()) {
+            val top = stack.pop()
+            visited.add(top)
+            graph[top]?.forEach {
+                if (it !in visited) { stack.push(it) }
+            }
+        }
+        println("DFS By Iteration: ${visited.toTypedArray().contentToString()}")
+    }
+
+    val dfsVisited = mutableSetOf<Char>()
+    fun dfs_byRecursion(src: Char){
+        dfsVisited.add(src)
+        graph[src]?.forEach {
+            if (it !in dfsVisited) dfs_byRecursion(it)
+        }
+    }
+    fun dfs_allPathsIteration(src: Char, dest: Char) {
+        val stack = Stack<MutableList<Char>>()
+        val visited = mutableSetOf<Char>()
+        val allPaths = mutableListOf<List<Char>>()
+        stack.push(mutableListOf<Char>().also { it.add(src) })
+
+        while (stack.isNotEmpty()) {
+            val top = stack.pop()
+            visited.add(top.last())
+            if (top.last() == dest) {
+                allPaths.add(top.toList())
+            }
+            graph[top.last()]?.forEach {
+                if (it !in top) {
+                    top.add(it)
+                    stack.push(top.toMutableList())
+                    top.remove(it)
+                }
+            }
+        }
+
+        println("\nAll Paths are by DFS Iteration: ")
+        allPaths.forEach {
+            println(it.toTypedArray().contentToString())
+        }
+    }
+    fun dfs_allPathsRecursion(src: Char, dest: Char,
+                              visited:MutableSet<Char>,
+                              currentPath: MutableSet<Char>) {
+        if (src == dest) {
+            println(currentPath.toTypedArray().contentToString())
+            return
+        }
+
+        graph[src]?.forEach {
+            if (it !in visited) {
+                visited.add(src)
+                currentPath.add(it)
+                dfs_allPathsRecursion(it,dest,visited, currentPath)
+                currentPath.remove(it)
+                visited.remove(src)
+            }
+        }
+    }
+
 }
 
 fun main() {
@@ -127,10 +197,18 @@ fun main() {
         bfs_allPaths_Recursion(
             dest = 'D', visited = mutableSetOf('A'),
             queue = ArrayDeque<MutableList<Char>>().also { it.offer(mutableListOf('A')) })
+
+
+        println("\n==================================================================================")
+
+        dfs_byIteration('A')
+        dfs_byRecursion('A')
+        println("DFS By Recursion: ${dfsVisited.toTypedArray().contentToString()}")
+        dfs_allPathsIteration('A','D')
+        println("\nDFS All Path By Recursion: ")
+        dfs_allPathsRecursion('A','D', mutableSetOf(), mutableSetOf('A'))
     }
 }
-
-
 
 Reading Graph Data: 
 [A] -> [B, E]
@@ -162,3 +240,27 @@ Path: [A, E, B, C, D] | Visited: [A, B, E, C, F, D]
 Path: [A, E, F, C, D] | Visited: [A, B, E, C, F, D]
 Path: [A, B, E, F, C, D] | Visited: [A, B, E, C, F, D]
 Path: [A, E, B, C, F, D] | Visited: [A, B, E, C, F, D]
+
+==================================================================================
+DFS By Iteration: [A, E, F, D, C, B]
+DFS By Recursion: [A, B, C, D, F, E]
+
+All Paths are by DFS Iteration: 
+[A, E, F, D]
+[A, E, F, C, D]
+[A, E, B, C, F, D]
+[A, E, B, C, D]
+[A, B, E, F, D]
+[A, B, E, F, C, D]
+[A, B, C, F, D]
+[A, B, C, D]
+
+DFS All Path By Recursion: 
+[A, B, C, D]
+[A, B, C, F, D]
+[A, B, E, F, C, D]
+[A, B, E, F, D]
+[A, E, B, C, D]
+[A, E, B, C, F, D]
+[A, E, F, C, D]
+[A, E, F, D]
