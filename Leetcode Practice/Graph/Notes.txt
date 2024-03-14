@@ -87,3 +87,16 @@ DFS explores all paths from the start vertex to all other vertices
 DFS Use for
 	1. Traverse all vertices
 	2. Traverse all paths between any two vertices
+=============================================================================================================
+ BFS: Breadth-First Search
+
+ Overview of the BFS Algorithm
+ 	- This is the same as DFS,
+ 	- This is also visits all Vertices
+ 	- This is very useful for finding the shortest path between any two vertices
+ 	- Although DFS also finds the shortest path, it needs to traverse all paths and then find the path
+ 	- In most cases, BFS has the natural choice to find the shortest path
+
+ Primary Use Case of BFS
+ 	- To Traverse/Visit all Vertices
+ 	- Finding the Shortest Path (where weight >= 0)
