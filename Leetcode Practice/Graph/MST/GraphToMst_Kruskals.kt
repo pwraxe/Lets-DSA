@@ -1,17 +1,3 @@
-/*
-* Todo,
-*  -Make Graph, Read it,
-*  - Understand Kruskal's and Prims Algorithms from YouTube or Anywhere,
-*  - Implement your own,then
-*  -
-*  - Convert Graph in Kruskal's Algorithm, Read it (Int Vertex)
-*  - Convert Graph in Prims Algorithm, Read it (Int Vertex)
-*  -
-*  - Convert Graph in Kruskal's Algorithm, Read it (Char Vertex)
-*  - Convert Graph in Prims Algorithm, Read it (Char Vertex)
-*
-* */
-
 data class Edge(val src:Char, val dest:Char, val weight: Int)
 class MstGraph {
 
@@ -28,7 +14,6 @@ class MstGraph {
             println()
         }
     }
-
 
 
     private val parents = hashMapOf<Char,Char>()
