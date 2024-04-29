@@ -1,9 +1,15 @@
+//=====VERY==VERY==VERY==EASY=EASY=EASY====
+
+//What is a Strongly Connected Component?
+//(Cycle in Directed Graph) SSC is a group of vertices from the graph in which from every node you can go another node and vice-versa
+
+
 //Kosaraju Algorithm
-//-> It use to find Strongly Connected Components
+//-> It is used to find Strongly Connected Components
 //-> Steps
-//-> 1. Perform Topological Sort on the original Graph (save data in stack)
+//-> 1. Perform Topological Sort on the original Graph (save data in the stack)
 //-> 2. Reverse Graph Edges and Clone to new Graph
-//-> 3. Perform DFS on Reverse Graph until stack empty
+//-> 3. Perform DFS on the Reverse Graph until the stack empty
 
 
 import java.util.*
