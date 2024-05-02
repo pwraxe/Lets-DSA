@@ -28,6 +28,26 @@ class LCS {
                 }
             }
         }
+
+        var seq = ""
+        var i = s1.length
+        var j = s2.length
+        while (i > 0 && j > 0) {
+            if (s1[i-1] == s2[j-1]) {
+                seq = "${s2[j-1]}${seq}"
+
+                i--
+                j--
+            } else {
+                if (dp[i-1][j] > dp[i][j-1]) {
+                    i--
+                } else {
+                    j--
+                }
+            }
+        }
+        println("LCS: $seq")
+
         return dp[s1.length][s2.length]
     }
 }
@@ -45,9 +65,10 @@ fun main() {
     }
 }
 
-
 res = 4 | dp[0][0] = 4
 res = 6 | dp[0][0] = 6
 =======================================================
+LCS: ACEF
 4
+LCS: ASOFTE
 6
