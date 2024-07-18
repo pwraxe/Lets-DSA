@@ -12,8 +12,11 @@
 
 //Merge Sort
 
+//Quick Sort
+
 class Solution {
 
+    //------------------------------------------------------------------Bubble Sort
     fun bubbleSortASC(list: IntArray) {
 
         repeat(list.size-1) {
@@ -37,6 +40,7 @@ class Solution {
         println(list.toTypedArray().contentToString())
     }
 
+    //------------------------------------------------------------------Selection Sort
     fun selectionSortASC(list: IntArray) {
 
         for (i in list.indices) {
@@ -66,6 +70,7 @@ class Solution {
         println(list.toTypedArray().contentToString())
     }
 
+    //------------------------------------------------------------------Insertion Sort
     fun insertionSortASC(list: IntArray) {
 
         for (i in 1 ..< list.size) {
@@ -96,6 +101,7 @@ class Solution {
         println(list.toTypedArray().contentToString())
     }
 
+    //------------------------------------------------------------------Counting Sort
     fun countingSortASC(list: IntArray) {
         val res = IntArray(list.size)
         for (num in list) {
@@ -126,7 +132,7 @@ class Solution {
         println(list.toTypedArray().contentToString())
     }
 
-
+    //------------------------------------------------------------------Merge Sort
     private fun merge(start: Int, mid: Int, end:Int, list: IntArray) {
         var left = start
         var right = mid+1
@@ -157,6 +163,29 @@ class Solution {
         println(list.toTypedArray().contentToString())
     }
 
+
+    //------------------------------------------------------------------Quick Sort
+    private fun partition(num: IntArray, start: Int, end: Int): Int {
+
+        val pivot = num[end]
+        var j = start
+
+        for (i in start .. end) {
+            if (num[i] <= pivot) {
+                num[i] = num[j].also { num[j] = num[i] }
+                j++
+            }
+        }
+        return j-1
+    }
+    fun quickSort(num: IntArray, start: Int = 0, end: Int = num.size-1) {
+        if (start >= end) return
+
+        val partitionIndex = partition(num, start, end)
+        quickSort(num, start, partitionIndex-1)
+        quickSort(num, partitionIndex+1, end)
+    }
+
 }
 
 fun main() {
@@ -176,5 +205,8 @@ fun main() {
         countingSortDESC(list)
         println("========================================")
         mergeSort(list)
+        println("========================================")
+        quickSort(list,0,list.size-1)
+        println(list.toTypedArray().contentToString())
     }
 }
