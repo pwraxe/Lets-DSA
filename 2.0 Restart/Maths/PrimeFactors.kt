@@ -1,5 +1,8 @@
 class Solution {
-    fun getPrimeFactors(n: Int) {
+
+
+    //TC: O(sqrt(n) * log n)
+    fun getPrimeFactors1(n: Int) {
         var num = n
         if(num <= 1) return
 
@@ -9,14 +12,59 @@ class Solution {
                 num /= i
             }
         }
-        if(num > 0) println("$num ")
+        if(num > 1) println("$num ") else println()
+    }
+
+    //TC: O(log(sqrt(n)))
+    fun getPrimeFactors2(n: Int) {
+        var num = n
+        if(num <= 1) return
+
+        for(i in 2 .. Math.sqrt(num.toDouble()).toInt()) {
+            while(num % i == 0) {
+                print("$i ")
+                num /= i
+            }
+        }
+        if(num > 1) println("$num ")
+    }
+
+    //O(sqrt(n))
+    fun getPrimeFactors3(n: Int) {
+        var num = n
+        if (num <= 1) return
+
+        while (num % 2 == 0) {
+            print("2 ")
+            num /= 2
+        }
+
+        while (num % 3 == 0) {
+            print("3 ")
+            num /= 3
+        }
+
+        for (i in 5 .. Math.sqrt(num * 1.0).toInt() step 6) {
+
+            while (num%i == 0) {
+                print("$i ")
+                num /= i
+            }
+
+            while (num % (i+2) == 0) {
+                print("${i+2} ")
+                num /= (i+2)
+            }
+        }
+        if (num > 3) println(num) else println()
     }
 }
 
 fun main() {
     Solution().apply {
-        getPrimeFactors(737) // 11 67
-        getPrimeFactors(400) // 2 2 2 2 5 5 1
+        getPrimeFactors1(737) // 11 67
+        getPrimeFactors1(400) // 2 2 2 2 5 5 1
+        getPrimeFactors1(1092) // 2 2 2 2 5 5 1
     }
 }
 
