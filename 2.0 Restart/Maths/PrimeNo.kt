@@ -15,18 +15,18 @@ class Solution {
         }
         return true
     }
-    
-	//Naive Method = TC: O(log(sqrt(n)))
-    fun isPrime3(num: Int): Boolean {
-        
-        if(num == 1) return true
-        if(num%2 == 0 && num%3 == 0) return false
-        
-    	for(i in 5 ..< Math.sqrt(num.toDouble()).toInt() step 6) {
-        	if(num % i == 0 || num % (i+1) == 0) return false
-    	}
-		return true
-	}
+
+    //O(log(sqrt(n)))
+    private fun isPrime(num: Int): Boolean {
+        if(num <= 1) return false
+        if (num == 2 || num == 3) return true
+        if (num % 2 == 0 || num % 3 == 0) return false
+
+        for (i in 5 ..Math.sqrt(num.toDouble()).toInt() step 6) {
+            if (num%i == 0 || num%(i+2) == 0) return false
+        }
+        return true
+    }
 }
 
 fun main() {
