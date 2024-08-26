@@ -23,6 +23,21 @@ class Solution {
         val res = pow * pow
         return if(p%2==0) res else res * b
     }
+
+    //TC: O(log(n)), SC: O(1)
+    fun power4(b: Int, p: Int): Int {
+        var pow = p
+        var res = 1
+        var base = b
+        while(pow > 0) {
+            if(pow and 1 == 1) {
+                res *= base
+            }
+            base *= base
+            pow = pow shr 1
+        }
+        return res
+    }
 }
 
 
@@ -31,5 +46,7 @@ fun main() {
         println(power1(2,5))
         println(power2(2,5))
         println(power3(2,5))
+        println(power4(2,5))
     }
 }
+//--> o/p: 32 
