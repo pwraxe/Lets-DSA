@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array Element Adder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      display: none; /* Hide the button, since we will use Enter key */
+    }
+
+    .array-container {
+      display: flex;
+      gap: 0;
+      margin-top: 20px;
+      border-top: 2px solid #000;
+      border-bottom: 2px solid #000;
+    }
+
+    .array-box {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #000;
+      border-left: none; /* Remove left border to connect with next box */
+      box-sizing: border-box;
+      position: relative;
+      text-align: center;
+    }
+
+    .element {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .index {
+      position: absolute;
+      bottom: -20px; /* Place index below the box */
+      width: 100%;
+      font-size: 14px;
+      text-align: center;
+      color: #555;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Array Element Adder</h1>
+
+  <label for="elementInput">Enter an element:</label>
+  <input type="text" id="elementInput" placeholder="Enter element">
+  <button onclick="addElement()">Add Element</button>
+
+  <h2>Array Elements:</h2>
+  <div class="array-container" id="arrayContainer">
+    <!-- Array elements will be displayed here -->
+  </div>
+
+  <script>
+    // Initialize an empty array to hold the elements
+    let elementArray = [];
+
+    // Function to add element to the array
+    function addElement() {
+      const elementInput = document.getElementById('elementInput').value;
+      
+      // Check if the input is not empty
+      if (elementInput.trim() !== "") {
+        // Add the new element to the array
+        elementArray.push(elementInput);
+
+        // Clear the input field
+        document.getElementById('elementInput').value = "";
+
+        // Update the displayed list
+        displayArray();
+      } else {
+        alert("Please enter a valid element.");
+      }
+    }
+
+    // Function to display the array elements in boxes
+    function displayArray() {
+      const arrayContainer = document.getElementById('arrayContainer');
+      arrayContainer.innerHTML = ""; // Clear the previous display
+
+      // Loop through the array and create boxes for each element
+      elementArray.forEach(function(element, index) {
+        const box = document.createElement('div');
+        box.classList.add('array-box');
+
+        // Element text inside the box
+        const elementText = document.createElement('div');
+        elementText.classList.add('element');
+        elementText.textContent = element;
+
+        // Append the element text to the box
+        box.appendChild(elementText);
+
+        // Create and display index below the box
+        const indexText = document.createElement('div');
+        indexText.classList.add('index');
+        indexText.textContent = `Index: ${index}`;
+
+        // Append the index text below the box
+        box.appendChild(indexText);
+
+        // Append the box to the container
+        arrayContainer.appendChild(box);
+      });
+    }
+
+    // Event listener to trigger 'addElement' function when Enter key is pressed
+    document.getElementById('elementInput').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        addElement(); // Call the addElement function
+      }
+    });
+
+  </script>
+
+</body>
+</html>
