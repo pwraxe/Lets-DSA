@@ -13,6 +13,7 @@ class Solution {
             if (n % index == 0) {
                 print("${n/index} ")
             }
+            index--
         }
     }
 }
