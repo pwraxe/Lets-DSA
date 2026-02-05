@@ -1,16 +1,16 @@
 class Solution {
     fun toBinary(n:Int, bin:String): String {
-        if (n == 0) return bin.reversed()
-        return toBinary(n/2,bin+"${n%2}")
+        if (n == 0) return bin
+        return toBinary(n/2, "${n%2}"+bin )
     }
     fun toOctal(n: Int, oct:String): String {
-        if (n == 0) return oct.reversed()
-        return toOctal(n/8,oct+"${n%8}")
+        if (n == 0) return oct 
+        return toOctal(n/8, "${n%8}"+oct)
     }
     fun toHexaDecimal(n:Int, hex:String):String {
-        if (n == 0) return hex.reversed()
+        if (n == 0) return hex 
         val char = if (n%16 in 10 ..15) "${(55 + n%16).toChar()}" else "${n%16}"
-        return toHexaDecimal(n/16,hex+char)
+        return toHexaDecimal(n/16,char+hex)
     }
 
     fun anding(a:Int,b:Int) {
