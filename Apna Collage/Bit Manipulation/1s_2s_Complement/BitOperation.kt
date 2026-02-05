@@ -39,6 +39,13 @@ class BitManipulation {
         val mask = 0.inv() shl index
         return a and mask
     }
+
+    /**
+    val mask = { [ ( 1 shl n ) - 1 ] shl n-1 }.inv()
+    Here inv => i.e., negation
+
+    val res = num and mask 
+    */
     fun clearBitsInRange(a:Int, start: Int, end: Int): Int {
         var num = a
         for (index in start..end) {
