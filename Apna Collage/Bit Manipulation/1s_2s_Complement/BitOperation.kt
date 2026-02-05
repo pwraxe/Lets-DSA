@@ -41,7 +41,7 @@ class BitManipulation {
     }
 
     /**
-    val mask = { [ ( 1 shl n ) - 1 ] shl n-1 }.inv()
+    val mask = { [ ( 1 shl n ) - 1 ] shl n }.inv()
     Here inv => i.e., negation
 
     val res = num and mask 
