@@ -25,6 +25,16 @@ class BitManipulation {
             setIthBit(a, index)
         }
     }
+
+
+    /**
+    Way 1: `and` with Hex value 0XFFF0
+        val res = num and 0XFFF0
+
+    Way 2: 
+    =>    val mask = ( (1 shl n)-1 ).inv()
+    =>    val res = num and mask    
+    */
     fun clearLastIthBits(a:Int, index:Int): Int {
         val mask = 0.inv() shl index
         return a and mask
