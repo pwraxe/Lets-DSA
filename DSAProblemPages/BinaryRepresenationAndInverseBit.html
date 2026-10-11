@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>32-bit Binary Visualizer</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    background: #f6f6f6;
+  }
+  h2 { margin-bottom: 10px; }
+  .container {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .input-row { margin-bottom: 20px; }
+  input {
+    padding: 10px;
+    font-size: 16px;
+    width: 200px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  .bit-box {
+    display: grid;
+    grid-template-columns: repeat(32, 20px);
+    gap: 4px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .bit {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #333;
+    color: white;
+    font-size: 14px;
+    border-radius: 3px;
+  }
+  .section { margin-top: 20px; }
+</style>
+</head>
+
+<body>
+  <h2>32-bit Integer Binary Visualizer</h2>
+
+  <div class="container">
+    <div class="input-row">
+      <input type="number" id="numInput" placeholder="Enter any integer" oninput="resetUI()" />
+      <button id="convertBtn" onclick="convert()">Convert</button>
+      <button id="inverseBtn" onclick="inverse()" style="display:none;">Inverse</button>
+    </div>
+
+    <div id="binarySection" class="section" style="display:none;">
+      <h3>Binary (32-bit):</h3>
+      <div id="binaryBox" class="bit-box"></div>
+    </div>
+
+    <div id="inverseSection" class="section" style="display:none;">
+      <h3>Inverse Binary (1's Complement):</h3>
+      <div id="inverseBox" class="bit-box"></div>
+    </div>
+
+    <div id="stepsSection" class="section" style="display:none;">
+      <h3>Intermediate Steps</h3>
+      <p id="steps"></p>
+    </div>
+
+    <div id="complementsSection" class="section" style="display:none;">
+      <h3>1's Complement (Decimal): <span id="onesDec"></span></h3>
+      <h3>2's Complement (Decimal): <span id="twosDec"></span></h3>
+    </div>
+  </div>
+
+</body>
+
+<script>
+  function resetUI() {
+    document.getElementById('binarySection').style.display = 'none';
+    document.getElementById('inverseSection').style.display = 'none';
+    document.getElementById('stepsSection').style.display = 'none';
+    document.getElementById('complementsSection').style.display = 'none';
+    document.getElementById('inverseBtn').style.display = 'none';
+  }
+
+  function to32Bit(n) {
+    return (n >>> 0).toString(2).padStart(32, '0');
+  }
+
+  function displayBits(bits, containerId) {
+    const box = document.getElementById(containerId);
+    box.innerHTML = '';
+    bits.split('').forEach(bit => {
+      const div = document.createElement('div');
+      div.className = 'bit';
+      div.textContent = bit;
+      box.appendChild(div);
+    });
+  }
+
+  function convert() {
+    const num = parseInt(document.getElementById('numInput').value);
+    if (isNaN(num)) return;
+
+    const bin32 = to32Bit(num);
+    displayBits(bin32, 'binaryBox');
+
+    document.getElementById('binarySection').style.display = 'block';
+    document.getElementById('inverseBtn').style.display = 'inline-block';
+  }
+
+  function inverse() {
+    const num = parseInt(document.getElementById('numInput').value);
+    if (isNaN(num)) return;
+
+    const bin32 = to32Bit(num);
+
+    let stepBits = [];
+    let inv = '';
+    for (let i = 0; i < bin32.length; i++) {
+      const originalBit = bin32[i];
+      const flipped = originalBit === '0' ? '1' : '0';
+      inv += flipped;
+      stepBits.push(`Bit ${i}: ${originalBit} → ${flipped}`);
+    }
+
+    displayBits(inv, 'inverseBox');
+
+    const onesComplementDecimal = ~num;
+    const twosComplementDecimal = (~num) + 1;
+
+    document.getElementById('onesDec').innerText = onesComplementDecimal;
+    document.getElementById('twosDec').innerText = twosComplementDecimal;
+
+    document.getElementById('steps').innerText =
+      `Original Binary (32‑bit):
+${bin32}
+
+` +
+      `1's Complement Binary (flip all bits):
+${inv}
+` +
+      `1's Complement Decimal Calculation:
+` +
+      `~num = ~( ${num} ) = -( ${num} + 1 ) = ${onesComplementDecimal}
+
+` +
+      `2's Complement Binary (1's complement + 1):
+${to32Bit(twosComplementDecimal)}
+` +
+      `2's Complement Decimal Calculation:
+` +
+      `(1's complement) + 1 = ${onesComplementDecimal} + 1 = ${twosComplementDecimal}`;
+
+    document.getElementById('inverseSection').style.display = 'block';
+    document.getElementById('stepsSection').style.display = 'block';
+    document.getElementById('complementsSection').style.display = 'block';
+  }
+</script>
+</html>

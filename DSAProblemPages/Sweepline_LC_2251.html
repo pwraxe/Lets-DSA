@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweep-line Visualizer: Flowers in Full Bloom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .timeline-grid {
+            background-size: 6.66% 100%;
+            background-image: linear-gradient(to right, #e5e7eb 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen text-slate-800 font-sans p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto space-y-6">
+        <!-- Header -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h1 class="text-2xl font-bold text-pink-600 mb-2">LeetCode 2251: Flowers in Full Bloom</h1>
+            <p class="text-gray-600">
+                <strong>Offline Queries Technique:</strong> We process Flower Starts, People Arrivals, and Flower Ends all on the <em>same</em> timeline. Watch the sweep-line count the active flowers and record the answer the exact moment it touches a person!
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Left Column: Controls & Data -->
+            <div class="space-y-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
+                    <h2 class="font-semibold text-lg mb-4">Input Data</h2>
+                    
+                    <div class="mb-4">
+                        <h3 class="text-sm font-bold text-green-600">🌺 Flowers [Start, End]</h3>
+                        <ul class="text-sm text-gray-600 list-disc list-inside">
+                            <li>F0: [1, 6] (Drops at 7)</li>
+                            <li>F1: [3, 7] (Drops at 8)</li>
+                            <li>F2: [9, 12] (Drops at 13)</li>
+                            <li>F3: [4, 13] (Drops at 14)</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-4">
+                        <h3 class="text-sm font-bold text-blue-600">🚶 People [Arrival Time]</h3>
+                        <ul class="text-sm text-gray-600 list-disc list-inside">
+                            <li>P0 arrives at Time 2</li>
+                            <li>P1 arrives at Time 3</li>
+                            <li>P2 arrives at Time 7</li>
+                            <li>P3 arrives at Time 11</li>
+                        </ul>
+                    </div>
+                    
+                    <button id="btn-play" onclick="startSweep()" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-medium py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+                        ▶️ Start Sweep-line
+                    </button>
+                    <button id="btn-reset" onclick="resetSim()" class="mt-2 w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-xl transition-colors hidden">
+                        Reset Simulation
+                    </button>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
+                    <h2 class="font-semibold text-sm text-gray-500 uppercase tracking-wider mb-2">Results Array</h2>
+                    <div id="results-box" class="text-lg font-mono font-medium text-pink-600 flex items-center gap-2">
+                        [<span id="ans0">?</span>, <span id="ans1">?</span>, <span id="ans2">?</span>, <span id="ans3">?</span>]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Visualization -->
+            <div class="lg:col-span-2 space-y-4">
+                
+                <!-- Garden View -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                    <div class="flex justify-between items-end mb-4">
+                        <h2 class="font-semibold text-lg">Garden Timeline (Time 0 to 15)</h2>
+                        <div class="text-sm font-mono bg-green-50 px-3 py-1 rounded-md text-green-700 border border-green-200">
+                            Active Blooms: <span id="active-count" class="font-bold text-xl">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="relative h-72 border-l-2 border-b-2 border-gray-300 timeline-grid" style="margin-left: 10px; margin-right: 10px;">
+                        
+                        <!-- X-Axis Labels 0 to 15 -->
+                        <div id="axis-labels" class="absolute -bottom-6 left-0 w-full flex justify-between text-xs text-gray-500">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <!-- Flowers Container -->
+                        <div id="flowers-container" class="absolute inset-0 pt-2 space-y-3 z-10">
+                            <!-- Flowers injected here -->
+                        </div>
+
+                        <!-- People Container -->
+                        <div id="people-container" class="absolute inset-0 z-20 pointer-events-none">
+                            <!-- People injected here -->
+                        </div>
+
+                        <!-- Sweep Line -->
+                        <div id="sweep-line" class="absolute top-0 bottom-0 w-1 bg-pink-500 z-30 shadow-[0_0_10px_rgba(236,72,153,0.8)] hidden" style="left: 0%;">
+                            <div class="absolute -top-3 -left-3 bg-pink-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow">SWEEP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Logs -->
+                <div class="bg-slate-900 p-4 rounded-2xl shadow-sm border border-gray-800 h-40 overflow-y-auto">
+                    <h2 class="font-semibold text-xs text-slate-400 uppercase tracking-wider mb-2">Event Logs</h2>
+                    <div id="logs" class="text-sm font-mono text-green-400 space-y-1">
+                        System ready... Waiting to sweep.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const MAX_TIME = 15;
+        const flowers = [
+            { id: 0, start: 1, end: 6 },
+            { id: 1, start: 3, end: 7 },
+            { id: 2, start: 9, end: 12 },
+            { id: 3, start: 4, end: 13 }
+        ];
+        const people = [
+            { id: 0, time: 2 },
+            { id: 1, time: 3 },
+            { id: 2, time: 7 },
+            { id: 3, time: 11 }
+        ];
+
+        let events = [];
+        let isSweeping = false;
+
+        // DOM Elements
+        const axisLabels = document.getElementById('axis-labels');
+        const flowersContainer = document.getElementById('flowers-container');
+        const peopleContainer = document.getElementById('people-container');
+        const sweepLine = document.getElementById('sweep-line');
+        const activeCountEl = document.getElementById('active-count');
+        const logsEl = document.getElementById('logs');
+        const btnPlay = document.getElementById('btn-play');
+        const btnReset = document.getElementById('btn-reset');
+
+        // Initialize UI
+        function initUI() {
+            // Axis
+            for(let i=0; i<=15; i+=1) {
+                axisLabels.innerHTML += `<div class="absolute -translate-x-1/2" style="left: ${(i/15)*100}%">${i}</div>`;
+            }
+
+            // Draw Flowers
+            flowers.forEach(f => {
+                const left = (f.start / MAX_TIME) * 100;
+                // Width ends at end + 1 for visualization purposes
+                const width = ((f.end - f.start + 1) / MAX_TIME) * 100;
+                flowersContainer.innerHTML += `
+                    <div class="absolute h-6 bg-green-500 rounded-sm border border-green-700 flex items-center px-2 text-[10px] text-white font-bold shadow-sm opacity-80"
+                         style="left: ${left}%; width: ${width}%; top: ${(f.id) * 32}px">
+                        F${f.id} [${f.start}-${f.end}]
+                    </div>
+                `;
+            });
+
+            // Draw People
+            people.forEach(p => {
+                const left = (p.time / MAX_TIME) * 100;
+                peopleContainer.innerHTML += `
+                    <div class="absolute bottom-0 h-full border-l-2 border-blue-400 border-dashed" style="left: ${left}%;">
+                        <div class="absolute -bottom-2 -left-3 w-6 h-6 bg-blue-600 rounded-full text-white flex justify-center items-center text-[10px] font-bold shadow-lg ring-2 ring-white">
+                            P${p.id}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Build Events Array
+            // Type 0: Start, Type 1: Query, Type 2: End
+            flowers.forEach(f => {
+                events.push({ time: f.start, type: 0, text: `Flower ${f.id} bloomed (+1)` });
+                // Crucial Edge Case: It drops at END + 1
+                events.push({ time: f.end + 1, type: 2, text: `Flower ${f.id} withered (-1)` });
+            });
+            people.forEach(p => {
+                events.push({ time: p.time, type: 1, id: p.id, text: `Person ${p.id} arrived! (Recorded answer)` });
+            });
+
+            // Sort Events: Primary by Time. Secondary by Type (Start > Query > End)
+            events.sort((a, b) => {
+                if (a.time !== b.time) return a.time - b.time;
+                return a.type - b.type;
+            });
+        }
+
+        function logEvent(msg, color = 'text-green-400') {
+            logsEl.innerHTML += `<div class="${color}">> ${msg}</div>`;
+            logsEl.scrollTop = logsEl.scrollHeight;
+        }
+
+        async function startSweep() {
+            if (isSweeping) return;
+            isSweeping = true;
+            btnPlay.style.display = 'none';
+            logsEl.innerHTML = '';
+            
+            sweepLine.style.display = 'block';
+            let currentActiveCount = 0;
+            let eventIndex = 0;
+
+            const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+            // Sweep from 0 to 15 smoothly
+            for (let t = 0; t <= 150; t++) {
+                let actualTime = t / 10; // e.g., 0.1, 0.2 ... 15.0
+                
+                sweepLine.style.left = `${(actualTime / MAX_TIME) * 100}%`;
+
+                // Process events at this exact time
+                while (eventIndex < events.length && events[eventIndex].time <= actualTime) {
+                    const ev = events[eventIndex];
+                    
+                    // Stop animation briefly for visual clarity on events
+                    sweepLine.classList.add('bg-yellow-400');
+                    await sleep(300);
+
+                    if (ev.type === 0) { // Start
+                        currentActiveCount++;
+                        activeCountEl.innerText = currentActiveCount;
+                        logEvent(`[Time ${ev.time}] ${ev.text}`, 'text-green-400');
+                    } 
+                    else if (ev.type === 2) { // End
+                        currentActiveCount--;
+                        activeCountEl.innerText = currentActiveCount;
+                        logEvent(`[Time ${ev.time}] ${ev.text}`, 'text-orange-400');
+                    } 
+                    else if (ev.type === 1) { // Person Query
+                        document.getElementById(`ans${ev.id}`).innerText = currentActiveCount;
+                        document.getElementById(`ans${ev.id}`).classList.add('animate-ping', 'text-white', 'bg-pink-600', 'px-1', 'rounded');
+                        setTimeout(() => document.getElementById(`ans${ev.id}`).classList.remove('animate-ping'), 500);
+                        logEvent(`[Time ${ev.time}] ${ev.text} Saw ${currentActiveCount} flowers.`, 'text-blue-400 font-bold');
+                    }
+
+                    eventIndex++;
+                    sweepLine.classList.remove('bg-yellow-400');
+                }
+
+                await sleep(50); // Move line smoothly
+            }
+
+            logEvent("Simulation Complete!", "text-pink-400 font-bold");
+            btnReset.style.display = 'block';
+            isSweeping = false;
+        }
+
+        function resetSim() {
+            sweepLine.style.display = 'none';
+            sweepLine.style.left = '0%';
+            activeCountEl.innerText = '0';
+            logsEl.innerHTML = 'System ready... Waiting to sweep.';
+            btnPlay.style.display = 'flex';
+            btnReset.style.display = 'none';
+            for(let i=0; i<4; i++) {
+                let el = document.getElementById(`ans${i}`);
+                el.innerText = '?';
+                el.className = '';
+            }
+        }
+
+        initUI();
+    </script>
+</body>
+</html>

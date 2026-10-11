@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LIS Tails Animation</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:20px;background:#0f172a;color:#e2e8f0}
+h1{font-size:1.4rem;margin:0 0 12px}
+.controls{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+input{padding:8px 12px;border-radius:6px;border:1px solid #334155;background:#1e293b;color:#fff;width:280px}
+button{padding:8px 16px;border:none;border-radius:6px;background:#3b82f6;color:#fff;cursor:pointer;font-weight:600}
+button:disabled{opacity:.5;cursor:not-allowed}
+.panel{background:#1e293b;border-radius:10px;padding:16px;margin-bottom:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.box{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700;font-size:1.1rem;transition:all .3s}
+.num{background:#334155}
+.active{background:#f59e0b;color:#000;transform:scale(1.15)}
+.tails{background:#0ea5e9}
+.tails.highlight{background:#22c55e;color:#000}
+.pointer{font-size:.8rem;color:#94a3b8}
+.msg{min-height:48px;font-size:.95rem;line-height:1.4;color:#94a3b8}
+.legend{font-size:.8rem;color:#64748b;margin-top:8px}
+span.tag{display:inline-block;padding:2px 8px;border-radius:4px;margin-right:6px}
+</style>
+</head>
+<body>
+<h1>Longest Increasing Subsequence – Tails + Binary Search</h1>
+<div class="controls">
+  <input id="arrInput" value="10,9,2,5,3,7,101,18" placeholder="comma separated numbers">
+  <button id="startBtn">Start Animation</button>
+  <button id="nextBtn" disabled>Next Step</button>
+  <button id="autoBtn" disabled>Auto Play</button>
+</div>
+
+<div class="panel">
+  <div><strong>Current number (x):</strong> <span id="curX">–</span></div>
+  <div class="row" id="numsRow"></div>
+</div>
+
+<div class="panel">
+  <div><strong>tails[]</strong> (smallest tail of increasing subsequence of length i+1)</div>
+  <div class="row" id="tailsRow"></div>
+  <div class="row" id="idxRow"></div>
+  <div class="msg" id="msg">Enter an array and press Start</div>
+  <div class="legend">
+    <span class="tag" style="background:#f59e0b;color:#000">orange</span> current x
+    <span class="tag" style="background:#0ea5e9">blue</span> tails
+    <span class="tag" style="background:#22c55e;color:#000">green</span> position being written
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let nums=[], tails=[], size=0, i=0, left=0, right=0, mid=0, phase='idle', autoTimer=null;
+
+function render(){
+  // numbers
+  const nr=$('numsRow'); nr.innerHTML='';
+  nums.forEach((n,idx)=>{
+    const d=document.createElement('div');
+    d.className='box num'+(idx===i?' active':'');
+    d.textContent=n; nr.appendChild(d);
+  });
+  // tails
+  const tr=$('tailsRow'); tr.innerHTML='';
+  for(let j=0;j<Math.max(size,1);j++){
+    const d=document.createElement('div');
+    d.className='box tails'+(j===left && phase==='write'?' highlight':'');
+    d.textContent = j<size ? tails[j] : '·';
+    tr.appendChild(d);
+  }
+  // indices
+  const ir=$('idxRow'); ir.innerHTML='';
+  for(let j=0;j<Math.max(size,1);j++){
+    const d=document.createElement('div');
+    d.className='pointer'; d.style.width='48px'; d.style.textAlign='center';
+    d.textContent = j;
+    if(j===left) d.innerHTML+='<br><b style="color:#f59e0b">L</b>';
+    if(j===right && right!==left) d.innerHTML+='<br><b style="color:#a78bfa">R</b>';
+    if(j===mid && phase==='bin') d.innerHTML+='<br><b style="color:#f472b6">M</b>';
+    ir.appendChild(d);
+  }
+  $('curX').textContent = i<nums.length ? nums[i] : 'done';
+}
+
+function step(){
+  if(phase==='idle' || phase==='done') return;
+  const x = nums[i];
+
+  if(phase==='start'){
+    left=0; right=size; mid=0;
+    phase='bin';
+    $('msg').textContent = `x = ${x}. Binary search on tails[0..${size}) for first position ≥ ${x}`;
+    render(); return;
+  }
+
+  if(phase==='bin'){
+    if(left < right){
+      mid = left + ((right-left)>>1);
+      if(tails[mid] < x){
+        left = mid+1;
+        $('msg').textContent = `mid=${mid}, tails[${mid}]=${tails[mid]} < ${x} → left = ${left}`;
+      } else {
+        right = mid;
+        $('msg').textContent = `mid=${mid}, tails[${mid}]=${tails[mid]} ≥ ${x} → right = ${right}`;
+      }
+      render(); return;
+    }
+    // found insertion point
+    phase='write';
+    $('msg').textContent = `Insertion point = ${left}. Write tails[${left}] = ${x}`;
+    render(); return;
+  }
+
+  if(phase==='write'){
+    tails[left] = x;
+    if(left === size) size++;
+    $('msg').textContent = left===size-1 && left===size
+      ? `Extended LIS! size is now ${size}`
+      : `Updated tails[${left}]. size stays ${size}`;
+    // force re-render with highlight
+    render();
+    phase='next';
+    return;
+  }
+
+  if(phase==='next'){
+    i++;
+    if(i >= nums.length){
+      phase='done';
+      $('msg').textContent = `Finished! Length of LIS = ${size}`;
+      $('nextBtn').disabled = true;
+      $('autoBtn').disabled = true;
+      clearInterval(autoTimer);
+    } else {
+      phase='start';
+      $('msg').textContent = `Next number...`;
+    }
+    render();
+  }
+}
+
+$('startBtn').onclick = ()=>{
+  const raw = $('arrInput').value.trim();
+  if(!raw) return;
+  nums = raw.split(/[,\s]+/).map(Number).filter(n=>!isNaN(n));
+  if(!nums.length) return;
+  tails = new Array(nums.length).fill(0);
+  size=0; i=0; phase='start';
+  $('nextBtn').disabled=false;
+  $('autoBtn').disabled=false;
+  clearInterval(autoTimer);
+  $('msg').textContent = 'Ready. Press Next or Auto Play';
+  render();
+};
+
+$('nextBtn').onclick = step;
+$('autoBtn').onclick = ()=>{
+  if(autoTimer){ clearInterval(autoTimer); autoTimer=null; $('autoBtn').textContent='Auto Play'; return; }
+  $('autoBtn').textContent='Stop';
+  autoTimer = setInterval(()=>{ if(phase==='done'){clearInterval(autoTimer);return;} step(); }, 900);
+};
+</script>
+</body>
+</html>

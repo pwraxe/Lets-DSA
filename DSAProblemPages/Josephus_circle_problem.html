@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josephus Circle • Survivor Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500&amp;display=swap');
+        
+        :root {
+            --tw-color-primary: #22c55e;
+        }
+        
+        .circle-container {
+            position: relative;
+            width: 620px;
+            height: 620px;
+            margin: 0 auto;
+            border: 6px solid #111827;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 60px -10px rgb(34 197 94),
+                inset 0 0 80px -20px rgb(34 197 94);
+            background: radial-gradient(circle, #1f2937 0%, #111827 100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .person {
+            position: absolute;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: white;
+            box-shadow: 
+                0 10px 15px -3px rgb(0 0 0 / 0.3),
+                0 4px 6px -4px rgb(0 0 0 / 0.3);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            user-select: none;
+            border: 4px solid #22c55e;
+            background: linear-gradient(145deg, #22c55e, #16a34a);
+        }
+        
+        .person:hover {
+            transform: scale(1.15);
+            border-color: #eab308;
+        }
+        
+        .person.eliminating {
+            animation: eliminatePulse 800ms ease-in-out forwards;
+        }
+        
+        @keyframes eliminatePulse {
+            0% { transform: scale(1); background: linear-gradient(145deg, #22c55e, #16a34a); }
+            30% { transform: scale(1.3); background: linear-gradient(145deg, #ef4444, #b91c1c); border-color: #f59e0b; }
+            100% { transform: scale(0.2); opacity: 0; }
+        }
+        
+        .person-label {
+            position: absolute;
+            font-size: 13px;
+            font-weight: 500;
+            color: #22c55e;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111827;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 0.2);
+        }
+        
+        .current-marker {
+            animation: currentPing 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-white font-sans">
+    <div class="max-w-7xl mx-auto p-8">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <h1 class="text-5xl font-semibold tracking-tighter flex items-center gap-3">
+                    <span class="text-5xl">🔥</span>
+                    Josephus Problem
+                    <span class="text-emerald-400 text-4xl">⚔️</span>
+                </h1>
+                <p class="text-emerald-400 mt-1 text-xl font-medium">Circular elimination • Watch the last survivor</p>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <!-- Status -->
+                <div id="status" class="px-6 py-3 bg-gray-900 rounded-3xl flex items-center gap-3 text-sm font-medium">
+                    <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span id="status-text">Ready • Add people to the circle</span>
+                </div>
+                
+                <button onclick="resetEverything()" 
+                        class="px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-3xl flex items-center gap-2 font-medium transition-colors">
+                    <span class="text-xl">⟳</span>
+                    RESET ALL
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-8">
+            
+            <!-- Controls -->
+            <div class="col-span-12 lg:col-span-3 space-y-8">
+                
+                <!-- Add Person -->
+                <div class="bg-gray-900 rounded-3xl p-6">
+                    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <span class="text-3xl">➕</span>
+                        Add to Circle
+                    </h2>
+                    <div class="flex gap-3">
+                        <input 
+                            id="numberInput"
+                            type="number" 
+                            value="1"
+                            class="flex-1 bg-gray-800 text-white rounded-2xl px-5 py-5 text-3xl font-semibold text-center focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                            placeholder="Enter number">
+                        <button onclick="addPerson()"
+                                class="px-10 bg-emerald-500 hover:bg-emerald-600 transition-all active:scale-95 rounded-2xl font-semibold text-xl flex items-center">
+                            ADD
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-4 text-center">Numbers are added sequentially around the circle</p>
+                    
+                    <!-- Quick load -->
+                    <div class="mt-6 pt-6 border-t border-gray-700">
+                        <p class="text-xs uppercase tracking-widest text-gray-400 mb-3">Quick start</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="quickLoad(8)" 
+                                    class="bg-gray-800 hover:bg-gray-700 py-4 rounded-2xl text-sm font-medium">1 — 8 people</button>
+                            <button onclick="quickLoad(13)" 
+                                    class="bg-gray-800 hover:bg-gray-700 py-4 rounded-2xl text-sm font-medium">1 — 13 people</button>
+                            <button onclick="quickLoad(20)" 
+                                    class="bg-gray-800 hover:bg-gray-700 py-4 rounded-2xl text-sm font-medium">1 — 20 people</button>
+                            <button onclick="quickLoad(41)" 
+                                    class="bg-gray-800 hover:bg-gray-700 py-4 rounded-2xl text-sm font-medium">1 — 41 people</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Josephus Controls -->
+                <div class="bg-gray-900 rounded-3xl p-6">
+                    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <span class="text-3xl">⚔️</span>
+                        Josephus Simulation
+                    </h2>
+                    
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="flex-1">
+                            <label class="text-xs uppercase text-gray-400 block mb-1">Every Kth person</label>
+                            <input id="kInput" type="number" value="3" min="2"
+                                   class="w-full bg-gray-800 text-white rounded-2xl px-5 py-4 text-4xl font-semibold text-center focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        </div>
+                        <div>
+                            <button onclick="startAutoSimulation()" 
+                                    class="mt-6 w-36 h-14 bg-amber-500 hover:bg-amber-600 rounded-3xl font-semibold text-xl flex items-center justify-center gap-2 active:scale-95 transition-all">
+                                <span>AUTO</span>
+                                <span class="text-2xl">▶️</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <button onclick="stepSimulation()" 
+                                class="flex-1 py-5 bg-gray-800 hover:bg-gray-700 rounded-3xl font-medium flex items-center justify-center gap-2">
+                            <span class="text-xl">⏭️</span>
+                            NEXT KILL
+                        </button>
+                        
+                        <button onclick="pauseSimulation()" 
+                                id="pauseBtn"
+                                class="flex-1 py-5 bg-gray-800 hover:bg-gray-700 rounded-3xl font-medium flex items-center justify-center gap-2 opacity-50 pointer-events-none">
+                            ⏸️ PAUSE
+                        </button>
+                    </div>
+                    
+                    <div id="simulationInfo" class="mt-6 text-xs bg-black/40 rounded-2xl p-4 hidden">
+                        <div class="flex justify-between text-emerald-400">
+                            <span>Eliminated so far:</span>
+                            <span id="elimCount" class="font-mono">0</span>
+                        </div>
+                        <div class="h-px bg-gray-700 my-3"></div>
+                        <div class="text-amber-400 text-center font-medium" id="lastAction"></div>
+                    </div>
+                </div>
+                
+                <!-- Legend -->
+                <div class="text-xs leading-relaxed text-gray-400 bg-gray-900/60 rounded-3xl p-6">
+                    <strong class="text-white">How it works:</strong><br>
+                    • People stand in a circle<br>
+                    • Counting starts from the first added person<br>
+                    • Every <span class="text-amber-400">Kth</span> person is eliminated<br>
+                    • Counting continues from the next person<br>
+                    • Click any circle to manually remove<br>
+                    • Watch until only one survivor remains
+                </div>
+            </div>
+            
+            <!-- The Circle -->
+            <div class="col-span-12 lg:col-span-6 flex justify-center items-center">
+                <div id="circleContainer" class="circle-container relative">
+                    <!-- People are dynamically added here via JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Right Panel -->
+            <div class="col-span-12 lg:col-span-3 space-y-6">
+                
+                <!-- Current Circle Info -->
+                <div class="bg-gray-900 rounded-3xl p-6">
+                    <div class="flex justify-between items-baseline mb-4">
+                        <h3 class="font-semibold">Circle Members</h3>
+                        <span id="countDisplay" class="text-emerald-400 font-mono text-4xl font-semibold">0</span>
+                    </div>
+                    <div id="membersList" class="flex flex-wrap gap-2 max-h-64 overflow-auto text-sm"></div>
+                </div>
+                
+                <!-- Elimination History -->
+                <div class="bg-gray-900 rounded-3xl p-6">
+                    <h3 class="font-semibold mb-4 flex items-center gap-2">
+                        <span>💀</span> Elimination Order
+                    </h3>
+                    <div id="eliminationList" class="space-y-2 max-h-96 overflow-auto text-sm font-mono"></div>
+                </div>
+                
+                <!-- Survivor -->
+                <div id="survivorCard" class="hidden bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl p-8 text-center text-white shadow-2xl">
+                    <div class="text-7xl mb-3">🏆</div>
+                    <p class="uppercase text-xs tracking-[2px] opacity-75">The last survivor is</p>
+                    <div id="survivorNumber" class="text-8xl font-semibold mt-1 font-mono"></div>
+                    <button onclick="resetEverything()" 
+                            class="mt-8 text-sm bg-white/20 hover:bg-white/30 px-6 py-3 rounded-3xl transition-colors">
+                        START NEW GAME
+                    </button>
+                </div>
+                
+                <div class="text-[10px] text-gray-500 text-center mt-auto pt-8">
+                    Built as interactive Josephus visualizer<br>
+                    Add numbers • Click to remove • Watch the classic problem come alive
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script already loaded via CDN
+        function initializeTailwind() {
+            return {
+                // No config needed for basic classes
+            }
+        }
+        
+        // Global state
+        let people = []          // Current people in the circle (their numbers)
+        let currentIndex = 0     // Where counting starts for next elimination
+        let eliminatedHistory = []
+        let autoInterval = null
+        let isAutoRunning = false
+        
+        // DOM elements cache
+        let circleContainer
+        
+        /**
+         * Render the circle with perfect even spacing
+         */
+        function renderCircle() {
+            circleContainer.innerHTML = ''
+            
+            if (people.length === 0) {
+                // Empty state
+                const empty = document.createElement('div')
+                empty.className = 'absolute inset-0 flex items-center justify-center text-gray-500 text-xl font-light italic'
+                empty.innerHTML = `
+                    <div class="text-center">
+                        <div class="text-6xl mb-4 opacity-30">⭕</div>
+                        Circle is empty<br>
+                        <span class="text-base">Add numbers above</span>
+                    </div>
+                `
+                circleContainer.appendChild(empty)
+                updateUI()
+                return
+            }
+            
+            const radius = 235
+            const centerX = 310
+            const centerY = 310
+            const angleStep = (2 * Math.PI) / people.length
+            
+            people.forEach((num, i) => {
+                const angle = i * angleStep - Math.PI / 2   // start at top
+                
+                const x = centerX + radius * Math.cos(angle)
+                const y = centerY + radius * Math.sin(angle)
+                
+                const person = document.createElement('div')
+                person.className = `person`
+                person.style.left = `${x - 36}px`
+                person.style.top = `${y - 36}px`
+                person.textContent = num
+                person.dataset.index = i
+                
+                // Is this the current starting person for counting?
+                if (i === currentIndex && people.length > 1) {
+                    person.classList.add('current-marker')
+                    person.style.borderColor = '#eab308'
+                    person.style.boxShadow = '0 0 0 6px rgba(234, 179, 8, 0.3)'
+                }
+                
+                // Click to manually remove
+                person.addEventListener('click', (e) => {
+                    e.stopImmediatePropagation()
+                    if (isAutoRunning) return
+                    manualRemove(parseInt(person.dataset.index))
+                })
+                
+                circleContainer.appendChild(person)
+            })
+            
+            updateUI()
+        }
+        
+        /**
+         * Update side panels and counters
+         */
+        function updateUI() {
+            // Count
+            document.getElementById('countDisplay').textContent = people.length
+            
+            // Members list (small chips)
+            const membersEl = document.getElementById('membersList')
+            membersEl.innerHTML = ''
+            people.forEach(num => {
+                const chip = document.createElement('div')
+                chip.className = 'px-4 py-2 bg-gray-800 rounded-3xl text-sm font-medium inline-flex items-center'
+                chip.textContent = num
+                membersEl.appendChild(chip)
+            })
+            
+            // Elimination history
+            const histEl = document.getElementById('eliminationList')
+            histEl.innerHTML = ''
+            
+            if (eliminatedHistory.length === 0) {
+                const empty = document.createElement('div')
+                empty.className = 'text-gray-500 text-center py-8 italic'
+                empty.textContent = 'No one eliminated yet'
+                histEl.appendChild(empty)
+                return
+            }
+            
+            eliminatedHistory.forEach((entry, i) => {
+                const row = document.createElement('div')
+                row.className = 'flex items-center gap-3 bg-black/30 rounded-2xl px-4 py-3'
+                row.innerHTML = `
+                    <div class="w-6 h-6 flex items-center justify-center text-red-400 font-bold text-lg">${i+1}</div>
+                    <div class="flex-1 font-semibold">${entry}</div>
+                    <div class="text-xs text-gray-400">killed</div>
+                `
+                histEl.appendChild(row)
+            })
+            
+            // Show survivor card if only one left
+            const survivorCard = document.getElementById('survivorCard')
+            if (people.length === 1) {
+                survivorCard.classList.remove('hidden')
+                document.getElementById('survivorNumber').innerHTML = `
+                    ${people[0]}
+                    <div class="text-3xl mt-2 font-sans">👑</div>
+                `
+                if (autoInterval) {
+                    clearInterval(autoInterval)
+                    autoInterval = null
+                    isAutoRunning = false
+                }
+            } else {
+                survivorCard.classList.add('hidden')
+            }
+        }
+        
+        /**
+         * Add a new number to the end of the circle
+         */
+        function addPerson() {
+            const input = document.getElementById('numberInput')
+            const value = parseInt(input.value.trim())
+            
+            if (isNaN(value)) {
+                input.style.animation = 'shake 300ms'
+                setTimeout(() => input.style.animation = '', 300)
+                return
+            }
+            
+            people.push(value)
+            currentIndex = 0   // reset start point after adding
+            renderCircle()
+            
+            // Clear input and suggest next number
+            input.value = value + 1
+        }
+        
+        /**
+         * Manual removal by clicking a circle
+         */
+        function manualRemove(index) {
+            if (people.length <= 1) return
+            
+            // Quick flash animation before remove
+            const person = circleContainer.querySelector(`.person[data-index="${index}"]`)
+            if (person) {
+                person.classList.add('eliminating')
+            }
+            
+            setTimeout(() => {
+                const removed = people.splice(index, 1)[0]
+                eliminatedHistory.push(removed)
+                
+                // Adjust currentIndex if needed
+                if (index <= currentIndex) {
+                    currentIndex = Math.max(0, currentIndex - 1)
+                }
+                
+                renderCircle()
+            }, 600)
+        }
+        
+        /**
+         * Perform one step of Josephus elimination
+         */
+        function stepSimulation() {
+            if (people.length <= 1) return
+            if (isAutoRunning) return
+            
+            const kInput = parseInt(document.getElementById('kInput').value) || 2
+            if (kInput < 2) return
+            
+            // Calculate which person to eliminate
+            const eliminateIndex = (currentIndex + kInput - 1) % people.length
+            const eliminatedPerson = people[eliminateIndex]
+            
+            // Visual feedback: highlight the victim
+            const victimElement = circleContainer.querySelector(`.person[data-index="${eliminateIndex}"]`)
+            if (victimElement) {
+                victimElement.classList.add('eliminating')
+                
+                // Show temporary label
+                const label = document.createElement('div')
+                label.className = 'person-label text-amber-400'
+                label.style.left = victimElement.style.left
+                label.style.top = parseFloat(victimElement.style.top) - 60 + 'px'
+                label.textContent = `K=${kInput}`
+                circleContainer.appendChild(label)
+                
+                setTimeout(() => label.remove(), 1200)
+            }
+            
+            // Record action
+            document.getElementById('lastAction').innerHTML = `
+                Eliminated <span class="font-semibold text-2xl">${eliminatedPerson}</span> 
+                <span class="text-xs ml-2">(every ${kInput}th)</span>
+            `
+            document.getElementById('simulationInfo').classList.remove('hidden')
+            document.getElementById('elimCount').textContent = eliminatedHistory.length + 1
+            
+            // Remove after animation
+            setTimeout(() => {
+                people.splice(eliminateIndex, 1)
+                eliminatedHistory.push(eliminatedPerson)
+                
+                // Update currentIndex to continue from the person AFTER the eliminated one
+                currentIndex = eliminateIndex % people.length
+                
+                renderCircle()
+            }, 820)
+        }
+        
+        /**
+         * Start automatic simulation with delay between kills
+         */
+        function startAutoSimulation() {
+            if (people.length <= 1 || isAutoRunning) return
+            
+            isAutoRunning = true
+            document.getElementById('pauseBtn').classList.remove('opacity-50', 'pointer-events-none')
+            
+            document.getElementById('status-text').innerHTML = `
+                <span class="text-amber-400">SIMULATING</span> • Every ${document.getElementById('kInput').value || 2}th person dies
+            `
+            
+            autoInterval = setInterval(() => {
+                if (!isAutoRunning || people.length <= 1) {
+                    clearInterval(autoInterval)
+                    autoInterval = null
+                    isAutoRunning = false
+                    return
+                }
+                stepSimulation()
+            }, 1350)   // nice visible delay
+        }
+        
+        /**
+         * Pause auto simulation
+         */
+        function pauseSimulation() {
+            if (!isAutoRunning) return
+            clearInterval(autoInterval)
+            autoInterval = null
+            isAutoRunning = false
+            document.getElementById('pauseBtn').classList.add('opacity-50', 'pointer-events-none')
+            document.getElementById('status-text').textContent = 'Paused • Click NEXT KILL to continue'
+        }
+        
+        /**
+         * Quick load standard 1-N people
+         */
+        function quickLoad(n) {
+            if (isAutoRunning) return
+            people = []
+            for (let i = 1; i <= n; i++) {
+                people.push(i)
+            }
+            currentIndex = 0
+            eliminatedHistory = []
+            renderCircle()
+            
+            document.getElementById('status-text').innerHTML = `
+                Loaded <span class="font-semibold">${n}</span> people • Ready for simulation
+            `
+        }
+        
+        /**
+         * Full reset
+         */
+        function resetEverything() {
+            if (autoInterval) {
+                clearInterval(autoInterval)
+            }
+            people = []
+            eliminatedHistory = []
+            currentIndex = 0
+            isAutoRunning = false
+            document.getElementById('simulationInfo').classList.add('hidden')
+            document.getElementById('survivorCard').classList.add('hidden')
+            document.getElementById('status-text').textContent = 'Ready • Add people to the circle'
+            renderCircle()
+        }
+        
+        // Initialize everything when page loads
+        window.onload = function () {
+            initializeTailwind()
+            circleContainer = document.getElementById('circleContainer')
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '/' && document.activeElement.tagName !== "INPUT") {
+                    e.preventDefault()
+                    document.getElementById('numberInput').focus()
+                }
+                if (e.key === "Enter" && document.getElementById('numberInput') === document.activeElement) {
+                    addPerson()
+                }
+            })
+            
+            // Initial render
+            renderCircle()
+            
+            console.log('%c✅ Josephus Circle Visualizer ready! Add numbers and simulate the classic problem.', 'color:#22c55e; font-family:monospace')
+        }
+    </script>
+</body>
+</html>

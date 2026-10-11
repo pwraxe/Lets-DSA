@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIS Binary Search Visualizer</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background: #1e1e1e; color: #fff; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .array-container { display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap; height: 60px; align-items: center; }
+        .cell { width: 45px; height: 45px; border: 2px solid #555; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #2d2d2d; transition: 0.3s; position: relative; }
+        .cell span.idx { position: absolute; bottom: -20px; font-size: 10px; color: #aaa; }
+        .active-num { border-color: #00d2ff; background: rgba(0, 210, 255, 0.2); box-shadow: 0 0 10px #00d2ff; }
+        .pointer-left { border-color: #4caf50; background: rgba(76, 175, 80, 0.2); }
+        .pointer-right { border-color: #f44336; background: rgba(244, 67, 54, 0.2); }
+        .pointer-mid { border-color: #ffeb3b; background: rgba(255, 235, 59, 0.2); color: #ffeb3b; }
+        .updated { background: #4caf50 !important; color: white; transform: scale(1.1); border-color: #4caf50; }
+        .controls, .status-board { background: #2d2d2d; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        input { padding: 8px; width: 60%; background: #1e1e1e; border: 1px solid #555; color: white; border-radius: 4px; }
+        button { padding: 8px 15px; background: #007acc; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #005f9e; }
+        #log { font-family: monospace; color: #00d2ff; min-height: 40px; margin-top: 10px; font-size: 1.1em; }
+        .vars { display: flex; gap: 20px; font-family: monospace; font-size: 1.2em; color: #aaa; }
+        .vars span { padding: 5px 10px; background: #1e1e1e; border-radius: 4px; border: 1px solid #444; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>O(N log N) LIS Visualizer</h2>
+        <div class="controls">
+            <input type="text" id="inputArray" value="10, 9, 2, 5, 3, 7, 101, 18" placeholder="Comma separated numbers">
+            <button onclick="startVisualization()">Visualize Dry Run</button>
+        </div>
+
+        <div class="status-board">
+            <div class="vars">
+                <span id="var-x">x = -</span>
+                <span id="var-left">left = -</span>
+                <span id="var-mid">mid = -</span>
+                <span id="var-right">right = -</span>
+                <span id="var-size">size = 0</span>
+            </div>
+            <div id="log">Click Visualize to start...</div>
+        </div>
+
+        <h3>Input Array (nums):</h3>
+        <div class="array-container" id="nums-container"></div>
+
+        <h3>Tails Array (Current LIS states):</h3>
+        <div class="array-container" id="tails-container"></div>
+    </div>
+
+    <script>
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const delay = 1200; // Animation speed in ms
+
+        function updateLog(msg) { document.getElementById('log').innerHTML = msg; }
+        function updateVar(id, val, color="white") { 
+            document.getElementById(`var-${id}`).innerHTML = `${id} = <strong style="color:${color}">${val}</strong>`; 
+        }
+
+        async function startVisualization() {
+            const input = document.getElementById('inputArray').value;
+            const nums = input.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+            
+            const numsContainer = document.getElementById('nums-container');
+            const tailsContainer = document.getElementById('tails-container');
+            numsContainer.innerHTML = '';
+            tailsContainer.innerHTML = '';
+
+            // Initialize visual arrays
+            nums.forEach((num, i) => {
+                numsContainer.innerHTML += `<div class="cell" id="num-${i}">${num}</div>`;
+                tailsContainer.innerHTML += `<div class="cell" id="tail-${i}" style="opacity: 0.3">-<span class="idx">${i}</span></div>`;
+            });
+
+            let tails = new Array(nums.length).fill(0);
+            let size = 0;
+            updateVar('size', size);
+
+            for (let i = 0; i < nums.length; i++) {
+                const x = nums[i];
+                
+                // Reset highlights
+                document.querySelectorAll('.cell').forEach(c => c.className = 'cell');
+                document.getElementById(`num-${i}`).classList.add('active-num');
+                
+                updateVar('x', x, '#00d2ff');
+                updateLog(`Processing <b>x = ${x}</b>`);
+                await sleep(delay);
+
+                let left = 0;
+                let right = size;
+                updateVar('left', left, '#4caf50');
+                updateVar('right', right, '#f44336');
+                updateVar('mid', '-', '#ffeb3b');
+                
+                if (size > 0) updateLog(`Starting Binary Search in tails[0 to ${size}]`);
+                await sleep(delay);
+
+                // Binary Search Logic
+                while (left < right) {
+                    let mid = left + Math.floor((right - left) / 2);
+                    updateVar('mid', mid, '#ffeb3b');
+                    
+                    document.getElementById(`tail-${left}`).classList.add('pointer-left');
+                    if(right < tails.length) document.getElementById(`tail-${right}`).classList.add('pointer-right');
+                    document.getElementById(`tail-${mid}`).classList.add('pointer-mid');
+                    
+                    updateLog(`mid = ${mid}, comparing tails[${mid}] (${tails[mid]}) with x (${x})`);
+                    await sleep(delay + 500);
+
+                    if (tails[mid] < x) {
+                        updateLog(`tails[${mid}] < ${x}, so search right (left = mid + 1)`);
+                        left = mid + 1;
+                        updateVar('left', left, '#4caf50');
+                    } else {
+                        updateLog(`tails[${mid}] >= ${x}, so search left (right = mid)`);
+                        right = mid;
+                        updateVar('right', right, '#f44336');
+                    }
+                    
+                    // Clear binary search classes for next iteration
+                    document.querySelectorAll('.pointer-left, .pointer-right, .pointer-mid').forEach(c => {
+                        c.classList.remove('pointer-left', 'pointer-right', 'pointer-mid');
+                    });
+                    await sleep(delay);
+                }
+
+                // Overwrite or extend
+                tails[left] = x;
+                let tailCell = document.getElementById(`tail-${left}`);
+                tailCell.innerHTML = `${x}<span class="idx">${left}</span>`;
+                tailCell.style.opacity = '1';
+                tailCell.classList.add('updated');
+                
+                if (left === size) {
+                    size++;
+                    updateVar('size', size);
+                    updateLog(`Placed ${x} at tails[${left}]. Extended LIS length to ${size}!`);
+                } else {
+                    updateLog(`Replaced tails[${left}] with smaller optimal tail ${x}. (Keeps potential open)`);
+                }
+                
+                await sleep(delay + 500);
+            }
+            
+            updateLog(`<b>Finished! Length of LIS is ${size}</b>`);
+            document.querySelectorAll('.cell').forEach(c => c.classList.remove('active-num', 'updated'));
+        }
+    </script>
+</body>
+<FollowUp>
+</html>

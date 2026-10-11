@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binary Tree Visualizer - Canvas with Zoom</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a1f;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 { color: #00ffcc; margin-bottom: 8px; }
+    p { margin-bottom: 15px; }
+
+    .controls {
+      margin-bottom: 15px;
+    }
+    input, button {
+      padding: 12px 20px;
+      margin: 5px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+    }
+    input {
+      background: #1e1e3f;
+      color: white;
+      width: 220px;
+    }
+    button {
+      background: #00ffcc;
+      color: black;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #00ccaa; }
+
+    .binary-info {
+      margin: 15px 0;
+      font-size: 24px;
+      color: #ffcc00;
+    }
+
+    #canvas-container {
+      margin: 20px auto;
+      width: 1000px;
+      height: 560px;
+      border: 3px solid #334;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #0f0f23;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0, 255, 200, 0.2);
+    }
+
+    canvas {
+      display: block;
+      cursor: grab;
+    }
+
+    .instructions {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #aaa;
+    }
+    .zoom-info {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(0,0,0,0.6);
+      padding: 8px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Binary Tree Visualizer (Canvas)</h1>
+
+    <div class="controls">
+      <input type="number" id="numberInput" placeholder="Enter number (e.g. 13)" min="0" value="5">
+      <button onclick="buildTree()">Build Tree</button>
+      <button onclick="resetView()">Reset View</button>
+    </div>
+
+    <div class="binary-info" id="binaryInfo"></div>
+
+    <div id="canvas-container">
+      <div class="zoom-info" id="zoomInfo">Zoom: 100% | Drag to pan • Scroll to zoom</div>
+      <canvas id="treeCanvas" width="1000" height="560"></canvas>
+    </div>
+
+    <div class="instructions">
+      <strong>How it works:</strong> 0 = Left  1 = Right  •  Lines connect precisely to node centers<br>
+      Use mouse wheel to zoom • Click and drag to pan
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('treeCanvas');
+    const ctx = canvas.getContext('2d');
+    let scale = 1;
+    let offsetX = 0;
+    let offsetY = 0;
+    let isDragging = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    let nodes = [];
+    let edges = [];
+
+    function resetView() {
+      scale = 1;
+      offsetX = 0;
+      offsetY = 0;
+      draw();
+    }
+
+    function buildTree() {
+      const num = parseInt(document.getElementById('numberInput').value);
+      if (isNaN(num) || num < 0) {
+        alert("Please enter a valid positive number!");
+        return;
+      }
+
+      nodes = [];
+      edges = [];
+
+      let binary = num.toString(2);
+      document.getElementById('binaryInfo').innerHTML = 
+        `<strong>${num}</strong> in binary = <strong>${binary}</strong>`;
+
+      const rootX = 500;
+      const rootY = 100;
+
+      // Root node (no bit)
+      nodes.push({
+        x: rootX,
+        y: rootY,
+        type: 'root',
+        label: 'Root'
+      });
+
+      if (binary === '0') {
+        // Special case for 0
+        const childX = rootX;
+        const childY = rootY + 140;
+        nodes.push({ x: childX, y: childY, type: 'bit', value: '0' });
+        edges.push({ from: 0, to: 1 });
+      } else {
+        const bits = binary.split('').reverse(); // LSB first
+
+        let prevNodeIndex = 0; // root
+        let prevX = rootX;
+        let prevY = rootY;
+
+        // First bit (LSB) - direct child of Root
+        let currentX = rootX;
+        let currentY = rootY + 140;
+        nodes.push({ x: currentX, y: currentY, type: 'bit', value: bits[0] });
+        edges.push({ from: 0, to: nodes.length - 1 });
+
+        prevX = currentX;
+        prevY = currentY;
+
+        // Remaining bits
+        for (let i = 1; i < bits.length; i++) {
+          const bit = bits[i];
+          const level = i;
+          const spread = 140 * Math.pow(0.78, level);
+
+          currentX = (bit === '0') ? prevX - spread : prevX + spread;
+          currentY = prevY + 130;
+
+          // Keep within reasonable bounds
+          currentX = Math.max(100, Math.min(900, currentX));
+
+          nodes.push({ x: currentX, y: currentY, type: 'bit', value: bit });
+          edges.push({ from: nodes.length - 2, to: nodes.length - 1 });
+
+          prevX = currentX;
+          prevY = currentY;
+        }
+      }
+
+      // Center the view initially
+      resetView();
+      draw();
+    }
+
+    function draw() {
+      ctx.save();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Apply zoom and pan
+      ctx.translate(offsetX, offsetY);
+      ctx.scale(scale, scale);
+
+      // Draw edges first (so they go behind nodes)
+      ctx.strokeStyle = '#88aaff';
+      ctx.lineWidth = 5 / scale; // keep line thickness consistent visually
+      ctx.lineCap = 'round';
+
+      edges.forEach(edge => {
+        const fromNode = nodes[edge.from];
+        const toNode = nodes[edge.to];
+
+        ctx.beginPath();
+        ctx.moveTo(fromNode.x, fromNode.y);
+        ctx.lineTo(toNode.x, toNode.y);
+        ctx.stroke();
+      });
+
+      // Draw nodes
+      nodes.forEach(node => {
+        const radius = node.type === 'root' ? 38 : 32;
+
+        // Shadow / glow
+        ctx.shadowColor = node.type === 'root' ? '#ffd700' : (node.value === '0' ? '#ff4d4d' : '#4dff88');
+        ctx.shadowBlur = 25;
+
+        // Node circle
+        ctx.fillStyle = node.type === 'root' ? '#ffd700' : (node.value === '0' ? '#ff4d4d' : '#4dff88');
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Border
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 4 / scale;
+        ctx.stroke();
+
+        // Text
+        ctx.fillStyle = node.type === 'root' ? '#000' : '#fff';
+        ctx.font = node.type === 'root' ? 'bold 18px Arial' : 'bold 28px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(node.label || node.value, node.x, node.y);
+      });
+
+      ctx.restore();
+    }
+
+    // Mouse events for pan and zoom
+    canvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      canvas.style.cursor = 'grabbing';
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      offsetX += dx;
+      offsetY += dy;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      draw();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      canvas.style.cursor = 'grab';
+    });
+
+    // Zoom with mouse wheel
+    canvas.addEventListener('wheel', (e) => {
+      e.preventDefault();
+
+      const mouseX = e.clientX - canvas.getBoundingClientRect().left;
+      const mouseY = e.clientY - canvas.getBoundingClientRect().top;
+
+      const zoomFactor = e.deltaY < 0 ? 1.15 : 0.85;
+
+      // Zoom toward mouse position
+      const worldX = (mouseX - offsetX) / scale;
+      const worldY = (mouseY - offsetY) / scale;
+
+      scale *= zoomFactor;
+
+      // Clamp scale
+      scale = Math.max(0.3, Math.min(4, scale));
+
+      offsetX = mouseX - worldX * scale;
+      offsetY = mouseY - worldY * scale;
+
+      document.getElementById('zoomInfo').textContent = 
+        `Zoom: ${Math.round(scale * 100)}% | Drag to pan • Scroll to zoom`;
+
+      draw();
+    });
+
+    // Touch support (basic)
+    let touchStartX = 0, touchStartY = 0;
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      offsetX += dx;
+      offsetY += dy;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      draw();
+    });
+
+    canvas.addEventListener('touchend', () => isDragging = false);
+
+    // Initial build
+    window.onload = () => {
+      buildTree();
+      canvas.style.cursor = 'grab';
+    };
+  </script>
+</body>
+</html>
